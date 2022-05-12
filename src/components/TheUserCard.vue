@@ -1,27 +1,20 @@
 <template>
   <div>
-  <div class="user" @click="userDropdownVisible=!userDropdownVisible">
-    <UserAvatar @click="showUserDropdown"/>
-    <div class="user_name">Dart Weider</div>
-    <the-dropdown-user v-if="userDropdownVisible">
-      <dropdown-user-list-item
+    <div class="user" @click="userDropdownVisible = !userDropdownVisible">
+      <UserAvatar />
+      <div class="user_name">Dart Weider</div>
+      <the-dropdown-user v-if="userDropdownVisible">
+        <dropdown-user-list-item
           item-label="Personal data"
-          @click="modalOpen=!modalOpen"
-      />
-      <dropdown-user-list-item
-          item-label="Payment details"
-      />
-      <dropdown-user-list-item
-          item-label="Api documentation"
-      />
-      <divider-horizontal/>
-      <dropdown-user-list-item
-          class="text-red"
-          item-label="Logout"
-      />
-    </the-dropdown-user>
-  </div>
-    <base-modal v-if="modalOpen"/>
+          @click="handleClick"
+        />
+        <dropdown-user-list-item item-label="Payment details" />
+        <dropdown-user-list-item item-label="Api documentation" />
+        <divider-horizontal />
+        <dropdown-user-list-item class="text-red" item-label="Logout" />
+      </the-dropdown-user>
+    </div>
+    <base-modal v-if="modalOpen" />
   </div>
 </template>
 
@@ -33,64 +26,73 @@ import DividerHorizontal from "@/components/DividerHorizontal.vue";
 import BaseModal from "@/components/BaseModal";
 export default {
   name: "TheUserBar",
-  components:{
+  components: {
     UserAvatar,
     DropdownUserListItem,
     TheDropdownUser,
     DividerHorizontal,
-    BaseModal
+    BaseModal,
   },
-  data(){
-    return{
-      userDropdownVisible:false,
-      modalOpen:false
-    }
+  data() {
+    return {
+      userDropdownVisible: false,
+      modalOpen: false,
+    };
   },
-  methods:{
-    showUserDropdown(){
-      this.userDropdownVisible=true
-      console.log(this.userDropdownVisible)
-      console.log('hi')
+  methods: {
+    showUserDropdown() {
+      this.userDropdownVisible = true;
+      console.log(this.userDropdownVisible);
+      console.log("hi");
     },
-    hideUserDropdown(){
-      this.userDropdownVisible=false
-    }
+    handleClick() {
+      this.modalOpen = !this.modalOpen
+    },
+    handleOutsideClick(e) {
+      if (!this.$el.contains(e.target)) {
+        this.userDropdownVisible = false;
+      }
+    },
   },
   mounted() {
-    document.addEventListener('click',this.hideUserDropdown.bind(this), true)
+    document.addEventListener("click", (event) => {
+      this.handleOutsideClick(event);
+    });
   },
   beforeDestroy() {
-    document.removeEventListener('click',this.hideUserDropdown)
-  }
-}
+    document.removeEventListener("click", (event) => {
+      this.handleOutsideClick(event);
+    });
+  },
+};
 </script>
 
 <style scoped lang="scss">
-.user{
+.user {
   display: flex;
   align-items: center;
   position: relative;
   cursor: pointer;
-  &_name{
+  &_name {
     font-size: 16px;
     font-weight: 500;
     margin-right: 15px;
-   }
-  &::after{
-    content:"";
-    background: url('../assets/svg/chevron_down.svg') ;
+  }
+  &::after {
+    content: "";
+    background: url("../assets/svg/chevron_down.svg");
     background-size: contain;
     background-repeat: no-repeat;
     position: absolute;
     height: 12px;
     width: 12px;
     right: 0px;
-    top:10px;
+    top: 10px;
     transition: all 0.4s;
   }
 }
 
-.text-red{
-  color: #EC0000;
+.text-red {
+  color: #ec0000;
 }
 </style>

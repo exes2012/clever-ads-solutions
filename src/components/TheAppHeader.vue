@@ -1,21 +1,21 @@
 <template>
   <header class="header">
     <the-container class="header_container">
-      <the-logo-main/>
+      <the-logo-main />
       <header-nav-link
-          v-for="(navLink, i) in navLinks"
-          :key="i"
-          :url="navLink.url"
-          :name="navLink.label"
+        v-for="(navLink, i) in navLinks"
+        :key="i"
+        :url="navLink.url"
+        :name="navLink.label"
       />
       <the-user-bar>
         <the-currency-selector
-            :options="options"
-            @select="optionSelect"
-            :selected="selected"
+          :options="options"
+          @select="optionSelect"
+          :selected="selected.name"
         />
-        <divider-vertical/>
-        <the-user-card/>
+        <divider-vertical />
+        <the-user-card />
       </the-user-bar>
     </the-container>
   </header>
@@ -34,7 +34,7 @@ import DropdownUserListItem from "@/components/DropdownUserListItem.vue";
 
 export default {
   name: "TheAppHeader",
-  components:{
+  components: {
     TheCurrencySelector,
     TheLogoMain,
     HeaderNavLink,
@@ -43,47 +43,52 @@ export default {
     TheDropdownUser,
     DropdownUserListItem,
     DividerHorizontal,
-    TheUserBar
+    TheUserBar,
   },
   data() {
     return {
-      selected:'',
-      options:[
+      selected: {
+        name: "$USD",
+        value: "usd",
+      },
+      options: [
         {
-          name:'$USD', value:'usd'
+          name: "$USD",
+          value: "usd",
         },
         {
-          name:'€EUR', value:'eur'
+          name: "€EUR",
+          value: "eur",
         },
       ],
       navLinks: [
         {
-          label: 'Mediation',
-          url: '/'
+          label: "Mediation",
+          url: "/",
         },
         {
-          label: 'My payments',
-          url: '/mypayments'
+          label: "My payments",
+          url: "/mypayments",
         },
         {
-          label: 'Applications',
-          url: '/applications'
+          label: "Applications",
+          url: "/applications",
         },
         {
-          label: 'Creatives',
-          url: '/creatives'
+          label: "Creatives",
+          url: "/creatives",
         },
         {
-          label: 'Cross Promo Campaigns',
-          url: '/crosspromocampaigns'
+          label: "Cross Promo Campaigns",
+          url: "/crosspromocampaigns",
         },
       ],
-      userDropdownVisible:true,
-    }
+      userDropdownVisible: true,
+    };
   },
-  methods:{
-    optionSelect(option){
-      this.selected=option.name
+  methods: {
+    optionSelect(option) {
+      this.selected = option;
     },
   },
   // mounted() {
@@ -92,19 +97,17 @@ export default {
   // beforeDestroy() {
   //   document.removeEventListener('click',this.hideUserDropdown)
   // }
-}
+};
 </script>
 
 <style scoped lang="scss">
-.header{
+.header {
   display: flex;
   align-items: center;
   height: 75px;
   box-shadow: 4px 4px 20px rgba(0, 8, 81, 0.1);
-  &_container{
+  &_container {
     align-items: center;
   }
 }
-
-
 </style>

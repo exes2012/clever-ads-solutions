@@ -1,5 +1,5 @@
 <template>
-  <div class="list-item">
+  <div class="list-item" @click="$emit('click')">
     <div class="list-item_marker"></div>
     <div class="list-item_label"
     >{{itemLabel}}</div>
