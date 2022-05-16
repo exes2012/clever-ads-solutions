@@ -1,5 +1,7 @@
 <template>
-  <div class="divider"></div>
+  <div class="wrapper">
+    <div class="divider"></div>
+  </div>
 </template>
 
 <script>
@@ -12,8 +14,11 @@ export default {
 .divider{
   display: flex;
   height: 1px;
-  width: 97%;
+  width: 100%;
   margin: 0 16px;
   background:#DEDEDE;
+}
+.wrapper{
+  display: flex;
 }
 </style>

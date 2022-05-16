@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "DropdownUserListItem",
+  name: "UserAccountDropdownItem",
   props:[
       'itemLabel',
   ]

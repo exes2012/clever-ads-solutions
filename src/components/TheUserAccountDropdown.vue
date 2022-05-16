@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "TheDropdownUser",
+  name: "TheUserAccountDropdown",
 }
 </script>
 

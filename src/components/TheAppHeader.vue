@@ -15,22 +15,23 @@
           :selected="selected.name"
         />
         <divider-vertical />
-        <the-user-card />
+        <the-user-account />
       </the-user-bar>
     </the-container>
   </header>
 </template>
 
 <script>
-import TheUserBar from "@/components/TheUserBar";
+import TheUserBar from "@/components/TheUserBar.vue";
 import TheCurrencySelector from "@/components/TheCurrencySelector.vue";
 import TheLogoMain from "@/components/TheLogoMain.vue";
 import HeaderNavLink from "@/components/HeaderNavLink.vue";
 import DividerVertical from "@/components/DividerVertical.vue";
 import DividerHorizontal from "@/components/DividerHorizontal.vue";
-import TheUserCard from "@/components/TheUserCard.vue";
-import TheDropdownUser from "@/components/TheDropdownUser.vue";
-import DropdownUserListItem from "@/components/DropdownUserListItem.vue";
+import TheUserAccount from "@/components/TheUserAccount.vue";
+import TheDropdownUser from "@/components/TheUserAccountDropdown.vue";
+import DropdownUserListItem from "@/components/UserAccountDropdownItem.vue";
+
 
 export default {
   name: "TheAppHeader",
@@ -39,11 +40,11 @@ export default {
     TheLogoMain,
     HeaderNavLink,
     DividerVertical,
-    TheUserCard,
+    TheUserAccount,
+    TheUserBar,
     TheDropdownUser,
     DropdownUserListItem,
     DividerHorizontal,
-    TheUserBar,
   },
   data() {
     return {
