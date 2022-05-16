@@ -18,12 +18,6 @@ export default {
     DividerHorizontal,
     BaseModalButtonClose
   },
-  methods:{
-    closeWindow(){
-      this.$store.state.isPersonalDataOpen=false
-      console.log(this.$store.state.isPersonalDataOpen)
-    }
-  }
 
 };
 </script>

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="user" @click="userAccountDropdownVisible = !userAccountDropdownVisible">
+    <div
+      class="user"
+      @click="userAccountDropdownVisible = !userAccountDropdownVisible"
+    >
       <the-user-account-avatar />
       <div class="user_name">Dart Weider</div>
       <the-user-account-dropdown v-if="userAccountDropdownVisible">
@@ -15,8 +18,7 @@
       </the-user-account-dropdown>
     </div>
     <user-account-personal-data
-        v-if="this.$store.state.userAccount.isPersonalDataOpen"
-        @on-close="this.$store.commit('user-account/closeWindow')"
+      v-if="this.$store.state.userAccount.isPersonalDataOpen"
     />
   </div>
 </template>
@@ -48,7 +50,7 @@ export default {
       console.log("hi");
     },
     handleClick() {
-      this.isPersonalDataOpen = !this.isPersonalDataOpen
+      this.isPersonalDataOpen = !this.isPersonalDataOpen;
     },
     handleOutsideClick(e) {
       if (!this.$el.contains(e.target)) {
@@ -60,7 +62,7 @@ export default {
     document.addEventListener("click", (event) => {
       this.handleOutsideClick(event);
     });
-    console.log(this)
+    console.log(this);
   },
   beforeDestroy() {
     document.removeEventListener("click", (event) => {
