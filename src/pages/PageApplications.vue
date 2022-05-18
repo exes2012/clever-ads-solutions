@@ -1,23 +1,17 @@
 <template>
   <div>
-    <the-page-header
-        pageTitle="Applications"
-        button-icon="mdi-plus"
-        buttonTitle="Add Application"
-    />
-    <v-data-table
-        :headers="headers"
-        :items="desserts"
-        :items-per-page="5"
-        class="elevation-3 mt-8"
-    >
-    </v-data-table>
+    <app-table :headers="headers" :items="desserts"></app-table>
   </div>
 </template>
 
 <script>
+import AppTable from "@/components/AppTable";
+
 export default {
   name: "PageApplications",
+  components:{
+    AppTable
+  },
   data(){
     return{
           headers: [
@@ -27,7 +21,6 @@ export default {
               value: 'name',
             },
             { text: 'Platform', value: 'calories',align: 'center' },
-            { text: 'Start date', value: 'fat',align: 'center' },
             { text: 'Orientation', value: 'carbs',align: 'start' },
             { text: 'Published', value: 'protein',align: 'center' },
             { text: 'Use Banner', value: 'iron',align: 'center' },

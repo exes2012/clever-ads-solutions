@@ -7,28 +7,13 @@
     />
     <the-indicators-bar />
     <the-mediation-chart />
-    <v-data-table
-      :headers="headers"
-      :items="desserts"
-      :items-per-page="5"
-      class="elevation-3 mt-10"
-    >
-      <template slot="body.append">
-        <tr class="table-row">
-          <td>Totals:</td>
-          <td class="table-data">150</td>
-          <td class="table-data">260</td>
-          <td class="table-data">150</td>
-          <td class="table-data">260</td>
-          <td class="table-data">33%</td>
-        </tr>
-      </template>
-    </v-data-table>
+    <app-table :headers="headers" :items="desserts"></app-table>
   </div>
 </template>
 <script>
 import TheIndicatorsBar from "@/components/TheIndicatorsBar.vue";
 import TheMediationChart from "@/components/TheMediationChart.vue";
+import AppTable from "@/components/AppTable";
 import axios from "@/api";
 
 export default {
@@ -36,6 +21,8 @@ export default {
   components: {
     TheIndicatorsBar,
     TheMediationChart,
+    AppTable,
+    AppTable,
   },
   data() {
     return {
