@@ -10,31 +10,39 @@
          :options="optionsViewBy"
          @select="viewBySelect"
          :selected="selectedViewBy"
-         by-default="Default"
+         :options-width="'140px'"
      />
      <base-selector
          :options="optionsCompare"
          @select="compareSelect"
          :selected="selectedCompare"
-         by-default="Compare"
+         :options-width="'300px'"
      />
    </div>
-   <the-mediation-chart-filter/>
+   <the-mediation-chart-filter @click="openFilterModal"/>
+   <the-mediation-chart-filter-modal v-if="this.$store.state.filters.isFilterModalOpen"/>
  </div>
 </template>
 
 <script>
 import BaseSelector from "@/components/BaseSelector.vue";
 import TheMediationChartFilter from "@/components/TheMediationChartFilter.vue";
+import TheMediationChartFilterModal from "@/components/TheMediationChartFilterModal.vue";
+import {mapMutations} from "vuex";
+
 export default {
   name: "TheMediationChartBar",
   components: {
     BaseSelector,
-    TheMediationChartFilter
+    TheMediationChartFilter,
+    TheMediationChartFilterModal
   },
   data() {
     return {
-      selectedViewBy: '',
+      selectedViewBy:
+        {
+        name: 'Default', value: '1'
+        },
       optionsViewBy: [
         {
           name: 'Default', value: '1'
@@ -52,7 +60,9 @@ export default {
           name: 'Platform', value: '5'
         }
       ],
-      selectedCompare: '',
+      selectedCompare:{
+        name:'None', value:'1'
+      },
       optionsCompare: [
         {
           name: 'None', value: '1'
@@ -70,11 +80,12 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('filters',['openFilterModal']),
     viewBySelect(option) {
-      this.selectedViewBy = option.name
+      this.selectedViewBy = option
     },
     compareSelect(option) {
-      this.selectedCompare = option.name
+      this.selectedCompare = option
     },
   },
 }

@@ -2,24 +2,30 @@
  <div class="mediation-chart">
    <TheMediationChartBar/>
    <divider-horizontal/>
-
+   <custom-chart/>
  </div>
 </template>
 
 <script>
 import TheMediationChartBar from "@/components/TheMediationChartBar.vue";
 import DividerHorizontal from "@/components/DividerHorizontal";
+import CustomChart from "@/components/CustomChart.vue";
+
+
 export default {
   name: "TheMediationChart",
   components:{
     TheMediationChartBar,
-    DividerHorizontal
+    DividerHorizontal,
+    CustomChart
   }
 }
 </script>
 
 <style scoped>
 .mediation-chart{
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 632px;
   margin-top: 40px;

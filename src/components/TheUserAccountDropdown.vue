@@ -1,12 +1,33 @@
 <template>
   <div class="dropdown">
-    <slot/>
+    <user-account-dropdown-item
+        item-label="Personal data"
+        @click="openPersonalData"
+    />
+    <user-account-dropdown-item
+        item-label="Payment details"
+        @click="openPaymentDetails"/>
+    <user-account-dropdown-item item-label="Api documentation" />
+    <divider-horizontal />
+    <user-account-dropdown-item class="text-red" item-label="Logout" />
   </div>
 </template>
 
 <script>
+import UserAccountDropdownItem from "@/components/UserAccountDropdownItem.vue";
+import DividerHorizontal from "@/components/DividerHorizontal.vue";
+
+import {mapMutations} from "vuex";
+
 export default {
   name: "TheUserAccountDropdown",
+  components:{
+    UserAccountDropdownItem,
+    DividerHorizontal
+  },
+  methods:{
+    ...mapMutations('userAccount',['openPersonalData','openPaymentDetails'])
+  }
 }
 </script>
 
@@ -26,4 +47,9 @@ export default {
   z-index: 10;
   padding: 16px 0;
 }
+
+.text-red {
+  color: #ec0000;
+}
+
 </style>

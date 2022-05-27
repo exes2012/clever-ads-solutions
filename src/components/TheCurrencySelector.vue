@@ -11,8 +11,7 @@
       </div>
     </div>
     <div class="selected" @click="selectActive = !selectActive">
-      <div v-if="!selected">{{ selected }}</div>
-      <div>{{ selected }}</div>
+      {{ selected.name }}
     </div>
   </div>
 </template>
@@ -21,7 +20,7 @@
 export default {
   name: "TheCurrencySelector",
   props: {
-    selected: String,
+    selected: Object,
     options: {
       type: Array,
       default() {

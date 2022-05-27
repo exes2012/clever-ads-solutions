@@ -1,6 +1,8 @@
 <template>
   <div class="select-box">
-    <div class="options-container" v-if="selectActive">
+    <div class="options-container"
+         :style = "{width:optionsWidth}"
+         v-if="selectActive">
       <div class="option"
            v-for="option in options"
            :key="option.value"
@@ -10,8 +12,7 @@
       </div>
     </div>
     <div class="selected" @click="selectActive=!selectActive">
-      <div v-if="!selected">{{ byDefault }}</div>
-      <div v-else>{{selected}}</div>
+      {{selected.name}}
     </div>
   </div>
 </template>
@@ -20,8 +21,12 @@
 export default {
   name: "TheCurrencySelector",
   props:{
-    byDefault:String,
-    selected:String,
+    optionsWidth:
+        {
+          type:String,
+          default:"140px"
+        },
+    selected:Object,
     options:{
       type:Array,
       default(){
@@ -56,8 +61,8 @@ export default {
   .select-box{
     display:flex;
     flex-direction: column;
-    width: 140px;
-    padding: 4px 0 4px 16px;
+    min-width: 140px;
+    padding: 4px 35px 4px 16px;
     position: relative;
     border: 2px solid #EFEFEF;
     border-radius: 8px;
@@ -66,7 +71,6 @@ export default {
 
   .options-container{
     background: white;
-    width: 140px;
     transition: all 0.5s;
     border-radius: 16px;
     overflow: hidden;
@@ -116,7 +120,7 @@ export default {
     position: absolute;
     height: 12px;
     width: 12px;
-    right: 10px;
+    right: -23px;
     top:7px;
     transition: all 0.4s;
   }

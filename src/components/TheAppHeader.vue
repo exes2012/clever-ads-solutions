@@ -10,9 +10,9 @@
       />
       <the-user-bar>
         <the-currency-selector
-          :options="options"
+          :options="this.$store.state.currencies.currenciesList"
           @select="optionSelect"
-          :selected="selected.name"
+          :selected="this.$store.state.currencies.defaultCurrency"
         />
         <divider-vertical />
         <the-user-account />
@@ -48,20 +48,6 @@ export default {
   },
   data() {
     return {
-      selected: {
-        name: "$USD",
-        value: "usd",
-      },
-      options: [
-        {
-          name: "$USD",
-          value: "usd",
-        },
-        {
-          name: "€EUR",
-          value: "eur",
-        },
-      ],
       navLinks: [
         {
           label: "Mediation",
@@ -89,7 +75,7 @@ export default {
   },
   methods: {
     optionSelect(option) {
-      this.selected = option;
+      this.$store.state.currencies.defaultCurrency = option;
     },
   },
   // mounted() {

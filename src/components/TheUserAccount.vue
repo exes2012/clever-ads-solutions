@@ -2,23 +2,17 @@
   <div>
     <div
       class="user"
-      @click="userAccountDropdownVisible = !userAccountDropdownVisible"
+      @click="openUserAccountDropdown"
     >
       <the-user-account-avatar />
       <div class="user_name">Dart Weider</div>
-      <the-user-account-dropdown v-if="userAccountDropdownVisible">
-        <user-account-dropdown-item
-          item-label="Personal data"
-          @click="handleClick"
-        />
-        <user-account-dropdown-item item-label="Payment details" />
-        <user-account-dropdown-item item-label="Api documentation" />
-        <divider-horizontal />
-        <user-account-dropdown-item class="text-red" item-label="Logout" />
-      </the-user-account-dropdown>
+      <the-user-account-dropdown v-if="this.$store.state.userAccount.userAccountDropdownVisible"/>
     </div>
     <user-account-personal-data
       v-if="this.$store.state.userAccount.isPersonalDataOpen"
+    />
+    <user-account-payment-details
+        v-if="this.$store.state.userAccount.isPaymentDetailsOpen"
     />
   </div>
 </template>
@@ -26,35 +20,24 @@
 <script>
 import TheUserAccountDropdown from "@/components/TheUserAccountDropdown.vue";
 import TheUserAccountAvatar from "@/components/TheUserAccountAvatar.vue";
-import UserAccountDropdownItem from "@/components/UserAccountDropdownItem.vue";
-import DividerHorizontal from "@/components/DividerHorizontal.vue";
 import UserAccountPersonalData from "@/components/UserAccountPersonalData.vue";
+import UserAccountPaymentDetails from "@/components/UserAccountPaymentDetails.vue";
+import {mapMutations} from "vuex";
+
 export default {
   name: "TheUserAccount",
   components: {
     TheUserAccountAvatar,
     TheUserAccountDropdown,
-    UserAccountDropdownItem,
     UserAccountPersonalData,
-    DividerHorizontal,
+    UserAccountPaymentDetails
   },
-  data() {
-    return {
-      userAccountDropdownVisible: false,
-    };
-  },
+
   methods: {
-    showUserDropdown() {
-      this.userDropdownAccountVisible = true;
-      console.log(this.userDropdownAccountVisible);
-      console.log("hi");
-    },
-    handleClick() {
-      this.isPersonalDataOpen = !this.isPersonalDataOpen;
-    },
+    ...mapMutations('userAccount',["openUserAccountDropdown", "closeUserAccountDropdown"]),
     handleOutsideClick(e) {
       if (!this.$el.contains(e.target)) {
-        this.userDropdownAccountVisible = false;
+        this.$store.commit('userAccount/closeUserAccountDropdown')
       }
     },
   },
@@ -97,7 +80,5 @@ export default {
   }
 }
 
-.text-red {
-  color: #ec0000;
-}
+
 </style>

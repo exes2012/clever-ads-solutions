@@ -35,4 +35,11 @@ export default {
 .btn-red{
   color: #EC0000;
 }
+
+.btn-filter-apply{
+  padding: 14px 60px;
+  margin: 8px 0 28px 12px;
+  background: #0074FF;
+  color: white;
+}
 </style>

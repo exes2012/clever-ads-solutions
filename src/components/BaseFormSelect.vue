@@ -1,27 +1,30 @@
 <template>
-  <div class="select-box">
-    <div class="options-container" v-if="selectActive">
-      <div class="option"
-           v-for="option in options"
-           :key="option.value"
-           @click="selectOption(option)"
-      >
-        {{option.name}}
+  <div class="wrapper">
+    <div class="select-box">
+      <div class="options-container" v-if="selectActive">
+        <div class="option"
+             v-for="option in options"
+             :key="option.value"
+             @click="selectOption(option)"
+        >
+          {{option.name}}
+        </div>
+      </div>
+      <div class="selected" @click="selectActive=!selectActive">
+        <div class="placeholder" v-if="!selected">{{ placeholder }}</div>
+        <div class="value" v-else>{{selected.name}}</div>
       </div>
     </div>
-    <div class="selected" @click="selectActive=!selectActive">
-      <div v-if="!selected">{{ byDefault }}</div>
-      <div v-else>{{selected}}</div>
-    </div>
   </div>
+
 </template>
 
 <script>
 export default {
-  name: "TheCurrencySelector",
+  name: "BaseFormSelect",
   props:{
-    byDefault:String,
-    selected:String,
+    selected:Object,
+    placeholder:String,
     options:{
       type:Array,
       default(){
@@ -53,20 +56,24 @@ export default {
 </script>
 
 <style scoped>
+.wrapper{
+  display: flex;
+  width: 100%;
+}
   .select-box{
+    margin: 0 12px 24px 12px;
     display:flex;
     flex-direction: column;
-    width: 140px;
-    padding: 4px 0 4px 16px;
+    width: 100%;
+    height: 53px;
     position: relative;
-    border: 2px solid #EFEFEF;
+    border: 2px solid #CDD9E8;
     border-radius: 8px;
-    margin-right: 12px;
   }
 
   .options-container{
     background: white;
-    width: 140px;
+    width: 100%;
     transition: all 0.5s;
     border-radius: 16px;
     overflow: hidden;
@@ -74,8 +81,8 @@ export default {
     box-shadow: 4px 4px 20px rgba(0, 8, 81, 0.1);
     order:1;
     position: absolute;
-    top:35px;
-    right:-2px;
+    top:55px;
+    right:0;
     z-index: 10;
     padding: 16px 0;
   }
@@ -92,6 +99,18 @@ export default {
 
   .selected{
     cursor: pointer;
+    padding:13px 0 0 20px;
+  }
+
+  .placeholder{
+    font-size: 16px;
+    font-weight: 500;
+    color: #D1D1D1;
+  }
+
+  .value{
+    font-size: 16px;
+    font-weight: 500;
   }
 
   .option:hover{
@@ -100,7 +119,7 @@ export default {
 
   .select-box .options-container + .selected::after{
     transform: rotateX(180deg);
-    top:3px;
+    top:17px;
   }
   .selected{
     display: flex;
@@ -117,7 +136,7 @@ export default {
     height: 12px;
     width: 12px;
     right: 10px;
-    top:7px;
+    top:20px;
     transition: all 0.4s;
   }
 </style>

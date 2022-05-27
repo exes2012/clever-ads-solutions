@@ -5,8 +5,8 @@
       <input
           class="base-input_input"
           :placeholder="text"
-          :value="modelValue"
-          @input="$emit('update:modelValue', $event.target.value)"
+          :value="value"
+          @input="$emit('input', $event.target.value)"
       >
     </div>
   </div>
@@ -23,7 +23,7 @@ export default {
     label:{
       type:String,
     },
-    modelValue:{
+    value:{
       type:[String,Number],
       default:''
     }

@@ -1,12 +1,17 @@
 <template>
   <div>
-    <button class="filter-button">Filter</button>
+    <button class="filter-button" @click="$emit('click')">Filter</button>
   </div>
+
 </template>
 
 <script>
 export default {
-  name: "TheMediationChartFilter"
+  name: "TheMediationChartFilter",
+  components:{
+  },
+  methods:{
+  }
 }
 </script>
 

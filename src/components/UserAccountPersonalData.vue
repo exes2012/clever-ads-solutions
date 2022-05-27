@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-modal @on-close="closeWindow">
+    <base-modal @on-close="closePersonalData">
       <base-form-label label="Personal Data" />
       <row-container>
         <base-input text="Firstname" />
@@ -19,7 +19,13 @@
       </row-container>
       <base-input text="Address" />
       <row-container>
-        <base-button class="ml-auto" button-class="btn-red">Cancel</base-button>
+        <base-button
+            class="ml-auto"
+            button-class="btn-red"
+            @click="closePersonalData"
+        >
+          Cancel
+        </base-button>
         <base-button button-class="btn-blue">Save changes</base-button>
       </row-container>
     </base-modal>
@@ -38,7 +44,7 @@ export default {
     DividerHorizontal,
   },
   methods:{
-    ...mapMutations('userAccount', ['closeWindow'])
+    ...mapMutations('userAccount', ["closePersonalData"])
   }
 };
 </script>
