@@ -24,6 +24,7 @@ export default {
 
 <style scoped lang="scss">
 .navlink{
+  white-space: nowrap;
   color: black;
   font-size: 16px;
   font-weight: 500;
@@ -36,5 +37,12 @@ export default {
 
 .navlink-active{
   color: #0074FF;
+}
+
+@media screen and (max-width: 1200px) {
+  .navlink{
+    font-size: 14px;
+    margin-left: 20px;
+  }
 }
 </style>

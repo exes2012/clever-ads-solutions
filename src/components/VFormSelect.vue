@@ -7,12 +7,12 @@
              :key="option.value"
              @click="selectOption(option)"
         >
-          {{option.name}}
+          {{option[displayProperty]}}
         </div>
       </div>
       <div class="selected" @click="selectActive=!selectActive">
         <div class="placeholder" v-if="!selected">{{ placeholder }}</div>
-        <div class="value" v-else>{{selected.name}}</div>
+        <div class="value" v-else>{{selected[displayProperty]}}</div>
       </div>
     </div>
   </div>
@@ -30,7 +30,11 @@ export default {
       default(){
         return[]
       }
-    }
+    },
+    displayProperty:{
+      type:String,
+      default: "name"
+    },
   },
   data(){
     return{
@@ -61,11 +65,10 @@ export default {
   width: 100%;
 }
   .select-box{
-    margin: 0 12px 24px 12px;
     display:flex;
     flex-direction: column;
     width: 100%;
-    height: 53px;
+    height: 57px;
     position: relative;
     border: 2px solid #CDD9E8;
     border-radius: 8px;

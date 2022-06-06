@@ -44,7 +44,7 @@ export default {
             { text: 'Start date', value: 'startDate',align: 'start', sortable:false },
             { text: 'Languages', value: 'languages',align: 'start', sortable:false },
             { text: 'Creatives count', value: 'creativesCount',align: 'center', sortable:false },
-            { text: 'PremiumId', value: 'premiumId',align: 'center', sortable:false },
+            { text: 'Premium Id', value: 'premiumId',align: 'center', sortable:false },
             { text: 'Applications', value: 'applications',align: 'start', sortable:false },
             { text: 'Creatives', value: 'creatives', align: 'start', sortable:false },
             { text: 'Frequency', value: 'frequency',align: 'center', sortable:false },

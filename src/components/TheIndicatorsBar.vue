@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col class="d-flex">
-      <v-card width="214" height="90" outlined class="indicator-card" v-for="(indicator,id) in indicators" :key="id">
+      <v-card width="214" height="90" outlined class="indicator-card" :class="{ 'selected-card' : selectedId === id}" v-for="(indicator,id) in indicators" :key="id" @click.prevent="selectIndicator(indicator,id)">
         <v-card-text >
           <div class="indicator-card_title">
             {{ indicator.type }}
@@ -24,6 +24,7 @@ export default {
   name: "TheIndicatorsBar",
   data(){
     return{
+      selectedId:0,
       indicators:[
         {
           type:'Est. Revenue',
@@ -47,6 +48,12 @@ export default {
         }
       ]
     }
+  },
+  methods:{
+    selectIndicator(indicator,id){
+      this.selectedId = id
+      console.log(indicator.type)
+    }
   }
 }
 </script>
@@ -54,6 +61,7 @@ export default {
 <style lang="scss" scoped>
 .indicator-card {
   margin-right: 24px;
+  background: white !important;
   &:hover {
     border: 2px solid #0074FF;
   }
@@ -70,5 +78,9 @@ export default {
     line-height: 120%;
     margin-top: 9px;
   }
+}
+.selected-card{
+  border: 2px solid #0074FF;
+  background: white !important;
 }
 </style>

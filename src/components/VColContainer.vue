@@ -13,6 +13,7 @@ export default {
 <style scoped>
 .col-container{
   display: flex;
+  flex-direction: column;
   width: 100%;
 }
 </style>

@@ -7,7 +7,7 @@ export default new Vuetify({
     theme:{
         themes:{
             light:{
-                // anchor:'#f000000'
+                primary:'#0074FF',
             }
         }
     }

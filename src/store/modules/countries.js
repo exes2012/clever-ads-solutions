@@ -4,15 +4,15 @@ export default {
         countriesList: [
             {
                 name: "USA",
-                value: "1",
+                value: "usa",
             },
             {
                 name: "Hungary",
-                value: "2",
+                value: "hungary",
             },
             {
                 name: "Germany",
-                value: "3",
+                value: "germany",
             }
             ]
     },

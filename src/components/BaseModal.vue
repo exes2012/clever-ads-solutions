@@ -1,8 +1,13 @@
 <template>
   <div class="modal">
-    <div class="modal_window" :style="{width:formWidth}" v-if="windowType ==='modal-window'">
-      <base-modal-button-close class="modal_button-close"
-       @click="$emit('on-close')"
+    <div
+      class="modal_window"
+      :style="{ width: formWidth }"
+      v-if="windowType === 'modal-window'"
+    >
+      <base-modal-button-close
+        class="modal_button-close"
+        @click="$emit('on-close')"
       />
       <slot></slot>
     </div>
@@ -11,40 +16,37 @@
         <slot></slot>
       </div>
       <base-modal-button-close
-          class="content_button-close"
-          @click="$emit('on-close')"
+        class="content_button-close"
+        @click="$emit('on-close')"
       />
     </div>
   </div>
 </template>
 
 <script>
-import DividerHorizontal from "@/components/DividerHorizontal.vue";
-import BaseModalButtonClose from "@/components/BaseModalButtonClose.vue";
+import BaseModalButtonClose from "@/components/ButtonModalClose.vue";
 export default {
   name: "BaseModal",
-  props:{
-    windowType:{
-      Type:String,
-      validator(value){
-        return ['modal-window', 'content-window'].includes(value)
+  props: {
+    windowType: {
+      Type: String,
+      validator(value) {
+        return ["modal-window", "content-window"].includes(value);
       },
-      default:'modal-window'
+      default: "modal-window",
     },
-    formWidth:{
-      Type:String,
-      default:'774px'
+    formWidth: {
+      Type: String,
+      default: "774px",
     },
-    formHeight:{
-      Type:String,
-      default:'774px'
-    }
+    formHeight: {
+      Type: String,
+      default: "774px",
+    },
   },
   components: {
-    DividerHorizontal,
-    BaseModalButtonClose
+    BaseModalButtonClose,
   },
-
 };
 </script>
 
@@ -61,37 +63,37 @@ export default {
     border-radius: 26px;
     box-shadow: 4px 4px 20px rgba(0, 8, 81, 0.1);
     margin: 117px auto;
-    padding:12px 28px;
+    padding: 12px 28px;
     z-index: 12;
     position: relative;
-    }
-  &_button-close{
+  }
+  &_button-close {
     position: absolute;
-    top:17px;
+    top: 17px;
     right: 18px;
   }
 }
 
-.content{
+.content {
   position: fixed;
   z-index: 10;
   background: rgba(0, 0, 0, 0.4);
   inset: 0;
-  &_window{
+  &_window {
     display: flex;
     width: 944px;
     height: 472px;
     margin: 214px auto;
-    padding:11px 72px;
+    padding: 11px 72px;
     z-index: 12;
     position: relative;
   }
-  &_button-close{
+  &_button-close {
     position: absolute;
-    top:26px;
+    top: 26px;
     right: 36px;
   }
-  &_content{
+  &_content {
     display: flex;
     margin: auto;
     max-width: 100%;

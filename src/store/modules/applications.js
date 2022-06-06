@@ -77,6 +77,7 @@ export default {
         ],
         selectedId: null,
         isAdmobAppIdModalOpen: false,
+        isModalAddApplicationOpen:false,
     },
     mutations:{
         changeSelectedId(state,id){
@@ -88,10 +89,15 @@ export default {
         openAdmobAppIdModal(state){
             state.isAdmobAppIdModalOpen=true
             state.selectedId = null
-            console.log('Assafaf')
         },
         closeAdmobAppIdModal(state){
             state.isAdmobAppIdModalOpen=false
+        },
+        openModalAddApplication(state){
+            state.isModalAddApplicationOpen=true
+        },
+        closeModalAddApplication(state){
+            state.isModalAddApplicationOpen=false
         },
     }
 }

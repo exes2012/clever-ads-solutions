@@ -1,0 +1,86 @@
+.divider_one{
+  display: flex;
+  width: 168px;
+}
+
+.divider_two{
+  display: flex;
+  width: 90px;
+}
+
+.v-stepper__label{
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.v-stepper__step--active .v-stepper__label{
+  text-shadow: 0 0 0 #0074FF !important;
+}
+
+.v-stepper__step__step{
+  width: 32px !important;
+  height: 32px !important;
+  font-size: 18px !important;
+}
+
+.v-stepper__content{
+  padding: 23px 40px 40px 40px !important;
+  overflow: unset !important;
+}
+
+.v-stepper__wrapper{
+  overflow: unset !important;
+}
+
+.stepper {
+  box-shadow: 4px 4px 20px rgba(0, 8, 81, 0.1) !important;
+  border-radius: 26px !important;
+  &_header{
+    box-shadow: none !important;
+    padding: 10px 55px 0 16px;
+  }
+  &_step .primary{
+    background: #0074FF !important;
+  }
+  &_policy{
+    color:#747474;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+  }
+  &_label{
+    margin: 10px 0 10px 0;
+    color:#1F2024;
+    font-weight: 700;
+    font-size: 18px;
+  }
+  &_radio{
+    .v-label {
+      font-weight: 500;
+      font-size: 16px;
+      color: #1F2024 !important;
+    }
+  }
+  &_radio-wrap{
+    margin-top: 5px !important;
+    & .v-icon{
+      width: 22px !important;
+      height: 22px !important;
+    }
+  }
+  &_checkbox {
+    .v-input--selection-controls__ripple {
+      z-index: 1000 !important;
+    }
+    & label{
+      color: #1F2024 !important;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 140%;
+    }
+
+    & .v-icon{
+      color: #EFEFEF !important;
+    }
+  }
+}

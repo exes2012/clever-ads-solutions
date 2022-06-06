@@ -15,10 +15,10 @@ export default {
   display: flex;
   height: 1px;
   width: 100%;
-  margin: 0 16px;
   background:#DEDEDE;
 }
 .wrapper{
   display: flex;
 }
+
 </style>

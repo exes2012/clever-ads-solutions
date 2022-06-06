@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="application" id="App">
     <the-app-header/>
     <v-main>
       <the-container>
@@ -24,9 +24,20 @@ export default {
       items: ['$USD', 'EUR'],
     }
   },
+  methods:{
+    forcedOriginScale(containerId){
+      let App=document.getElementById(containerId)
+      App.style.zoom = 1/devicePixelRatio;
+    }
+  },
+  mounted() {
+    this.forcedOriginScale('App')
+  }
 };
 </script>
 
 <style  lang="scss">
-
+.application{
+  width: 100%;
+}
 </style>

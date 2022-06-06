@@ -10,6 +10,8 @@ import payments from "@/store/modules/payments";
 import creatives from "@/store/modules/creatives";
 import campaigns from "@/store/modules/campaigns";
 import chartdata from "@/store/modules/chartdata"
+import networks from "@/store/modules/networks";
+import languages from "@/store/modules/languages";
 
 Vue.use(Vuex)
 
@@ -25,7 +27,9 @@ const store= new Vuex.Store({
         payments,
         creatives,
         campaigns,
-        chartdata
+        chartdata,
+        networks,
+        languages
     }
 })
 

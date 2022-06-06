@@ -1,18 +1,17 @@
 <template>
   <div>
-    <div
-      class="user"
-      @click="openUserAccountDropdown"
-    >
+    <div class="user" @click="openUserAccountDropdown">
       <the-user-account-avatar />
       <div class="user_name">Dart Weider</div>
-      <the-user-account-dropdown v-if="this.$store.state.userAccount.userAccountDropdownVisible"/>
+      <the-user-account-dropdown
+        v-if="this.$store.state.userAccount.userAccountDropdownVisible"
+      />
     </div>
-    <user-account-personal-data
+    <the-modal-personal-data
       v-if="this.$store.state.userAccount.isPersonalDataOpen"
     />
-    <user-account-payment-details
-        v-if="this.$store.state.userAccount.isPaymentDetailsOpen"
+    <the-modal-payment-details
+      v-if="this.$store.state.userAccount.isPaymentDetailsOpen"
     />
   </div>
 </template>
@@ -20,24 +19,27 @@
 <script>
 import TheUserAccountDropdown from "@/components/TheUserAccountDropdown.vue";
 import TheUserAccountAvatar from "@/components/TheUserAccountAvatar.vue";
-import UserAccountPersonalData from "@/components/UserAccountPersonalData.vue";
-import UserAccountPaymentDetails from "@/components/UserAccountPaymentDetails.vue";
-import {mapMutations} from "vuex";
+import TheModalPersonalData from "@/components/TheModalPersonalData.vue";
+import TheModalPaymentDetails from "@/components/TheModalPaymentDetails.vue";
+import { mapMutations } from "vuex";
 
 export default {
   name: "TheUserAccount",
   components: {
     TheUserAccountAvatar,
     TheUserAccountDropdown,
-    UserAccountPersonalData,
-    UserAccountPaymentDetails
+    TheModalPersonalData,
+    TheModalPaymentDetails,
   },
 
   methods: {
-    ...mapMutations('userAccount',["openUserAccountDropdown", "closeUserAccountDropdown"]),
+    ...mapMutations("userAccount", [
+      "openUserAccountDropdown",
+      "closeUserAccountDropdown",
+    ]),
     handleOutsideClick(e) {
       if (!this.$el.contains(e.target)) {
-        this.$store.commit('userAccount/closeUserAccountDropdown')
+        this.$store.commit("userAccount/closeUserAccountDropdown");
       }
     },
   },
@@ -62,9 +64,11 @@ export default {
   position: relative;
   cursor: pointer;
   &_name {
+    white-space: nowrap;
     font-size: 16px;
     font-weight: 500;
     margin-right: 15px;
+    max-height: 25px;
   }
   &::after {
     content: "";
@@ -80,5 +84,9 @@ export default {
   }
 }
 
-
+@media screen and (max-width: 1200px) {
+  .user_name {
+    font-size: 14px;
+  }
+}
 </style>

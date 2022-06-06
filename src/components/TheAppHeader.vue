@@ -27,11 +27,9 @@ import TheCurrencySelector from "@/components/TheCurrencySelector.vue";
 import TheLogoMain from "@/components/TheLogoMain.vue";
 import HeaderNavLink from "@/components/HeaderNavLink.vue";
 import DividerVertical from "@/components/DividerVertical.vue";
-import DividerHorizontal from "@/components/DividerHorizontal.vue";
 import TheUserAccount from "@/components/TheUserAccount.vue";
 import TheDropdownUser from "@/components/TheUserAccountDropdown.vue";
 import DropdownUserListItem from "@/components/UserAccountDropdownItem.vue";
-
 
 export default {
   name: "TheAppHeader",
@@ -44,7 +42,6 @@ export default {
     TheUserBar,
     TheDropdownUser,
     DropdownUserListItem,
-    DividerHorizontal,
   },
   data() {
     return {
@@ -90,11 +87,17 @@ export default {
 <style scoped lang="scss">
 .header {
   display: flex;
+  width: 100%;
   align-items: center;
   height: 75px;
   box-shadow: 4px 4px 20px rgba(0, 8, 81, 0.1);
+  position: fixed;
+  top: 0;
+  background: white;
+  z-index: 10;
   &_container {
     align-items: center;
+    width: 100%;
   }
 }
 </style>

@@ -1,0 +1,45 @@
+.text-field{
+
+}
+
+.text-field .v-input__slot fieldset{
+  border: 2px solid #CDD9E8;
+}
+
+.text-field .v-input__slot .theme--light.v-icon {
+    color: #D1D1D1 !important;
+  }
+
+
+
+.text-field .v-text-field__slot{
+  margin-left: 10px !important;
+  & >input{
+    font-weight: 500;
+    font-size: 16px;
+  }
+  & >label{
+    color:#D1D1D1;
+    font-size: 16px;
+    font-weight: 500;
+    padding-right: 10px;
+  }
+}
+
+.search-field .v-text-field__slot{
+  margin-left: 10px !important;
+  & >input{
+    font-weight: 500;
+    font-size: 14px;
+  }
+  & >label{
+    color:#D1D1D1;
+    font-size: 14px;
+    font-weight: 500;
+    padding-right: 10px;
+  }
+}
+
+.search-field .v-input__slot:before{
+  border-color: #CDD9E8 !important;
+}

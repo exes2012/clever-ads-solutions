@@ -9,7 +9,11 @@ export default {
   props:['name'],
   data(){
     return{
-      path:icons[this.name]
+    }
+  },
+  computed:{
+    path(){
+      return icons[this.name]
     }
   }
 }

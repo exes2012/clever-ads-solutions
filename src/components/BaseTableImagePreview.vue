@@ -1,7 +1,12 @@
 <template>
   <div class="image-preview_container" @click="$emit('click')">
-    <img class="image-preview_img"
-         :src="imageSRC" alt="img">
+    <v-img
+        class="image-preview_img"
+         :src="imageSRC" alt="img"
+        max-width="90"
+        max-height="50"
+
+    ></v-img>
     <base-icon class="image-preview_icon" :name="iconName"/>
   </div>
 </template>
@@ -25,8 +30,6 @@ export default {
   .image-preview{
     &_container{
       display: flex;
-      width: 90px;
-      height: 50px;
       position: relative;
       margin: 16px auto 10px auto;
       cursor: pointer;
@@ -38,7 +41,7 @@ export default {
     &_icon{
       position: absolute;
       top:16px;
-      right:35px;
+      right:55px;
     }
   }
 </style>

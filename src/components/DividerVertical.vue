@@ -15,4 +15,10 @@ export default {
   margin: 0 22px;
   background:#DEDEDE;
 }
+
+@media screen and (max-width: 1200px) {
+  .divider{
+    margin: 0 8px;
+  }
+}
 </style>

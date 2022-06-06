@@ -1,10 +1,25 @@
 // Loading fonts
 @import "fonts";
+@import "vtextfield";
+@import "vstepper";
+
+body{
+  width: 100%;
+}
+
+
+.v-dialog{
+  overflow-y: unset !important;
+  overflow-x: unset !important;
+}
 
 tbody tr:nth-of-type(odd) {
   background-color: #F1F1F1;
 }
 
+.v-application .elevation-0 {
+  box-shadow: 4px 4px 20px rgba(0, 8, 81, 0.1) !important;
+}
 
 .table-row{
   font-weight: 700;
@@ -18,9 +33,29 @@ tbody tr:nth-of-type(odd) {
   width: 100%;
 }
 
+@media screen and (max-width: 1200px) {
+  .data-table {
+    .v-data-table-header {
+      tr {
+        th {
+            span{
+              font-size: 14px !important;
+              display: block !important;
+              text-align: center;
+            }
+        }
+      }
+    }
+  }
+  .v-data-table > .v-data-table__wrapper > table > tbody > tr > td{
+      font-size: 14px !important;
+  }
+
+}
 .data-table {
   filter: drop-shadow(4px 4px 20px rgba(0, 8, 81, 0.1));
   color: #1f2024 !important;
+  table-layout: fixed;
   ::v-deep .v-data-table-header {
     tr {
       th {
@@ -28,6 +63,7 @@ tbody tr:nth-of-type(odd) {
         position: relative;
         text-align: left !important;
         height: 54px;
+        overflow: hidden;
         .v-icon {
           opacity: 1;
           position: absolute;

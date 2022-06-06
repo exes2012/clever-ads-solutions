@@ -57,6 +57,7 @@ export default {
   flex-direction: column;
   width: 70px;
   position: relative;
+  margin-left: 10px;
 }
 
 .options-container {
@@ -70,7 +71,7 @@ export default {
   order: 1;
   position: absolute;
   top: 30px;
-  z-index: 10;
+  z-index: 15;
   padding: 16px 0;
 }
 
@@ -111,5 +112,11 @@ export default {
   right: 10px;
   top: 7px;
   transition: all 0.4s;
+}
+
+@media screen and (max-width: 1200px) {
+  .selected{
+    font-size: 14px;
+  }
 }
 </style>

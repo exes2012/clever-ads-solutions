@@ -3,6 +3,7 @@ export default {
     state:{
         isModalImageOpen:false,
         isModalVideoOpen:false,
+        isModalAddCreativeOpen:false,
         creativesList: [
             {
                 id:1,
@@ -41,5 +42,11 @@ export default {
         openModalVideo(state){
             state.isModalVideoOpen = true
         },
+        openModalAddCreative(state){
+            state.isModalAddCreativeOpen = true
+        },
+        closeModalAddCreative(state){
+            state.isModalAddCreativeOpen =false
+        }
     }
 }

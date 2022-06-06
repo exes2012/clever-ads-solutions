@@ -208,4 +208,9 @@ export default {
     position: relative;
   }
 }
+
+::v-deep .v-data-table__wrapper {
+   overflow-y: unset;
+  overflow-x: unset;
+}
 </style>

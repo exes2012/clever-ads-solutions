@@ -51,7 +51,7 @@ export default {
     return{
       selectActive:false,
       placeholderIsVisible:false,
-      optionsTop:"51px;"
+      optionsTop:"51px",
     }
   },
   props:{
@@ -100,7 +100,7 @@ export default {
     }
   },
   mounted(){
-    this.changeOptionsTop();
+    // this.changeOptionsTop();
   },
   computed:{
     formattedOptions(){
