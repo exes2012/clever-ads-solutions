@@ -6,7 +6,7 @@
     transition="dialog-bottom-transition"
     class="dialog"
   >
-    <v-card width="774" elevation="0" class="px-10 py-10 card">
+    <v-card width="774" elevation="0" class="card">
       <v-modal-button-close @click="closePaymentDetails" />
       <v-form-label label="Payment details" class="mb-4 mt-0" />
       <v-text-field
@@ -18,13 +18,13 @@
         reqired
         counter="50"
       />
-      <v-row-container>
+      <v-row-container class="mobile-row">
         <v-text-field
           v-model="appName"
           :rules="[rules.required]"
           outlined
           label="Holder's Name"
-          class="text-field pr-3"
+          class="text-field pr-3 mobile-row_field"
           reqired
           counter="16"
           hint="Enter valid phone number"
@@ -34,19 +34,19 @@
           :rules="[rules.required]"
           outlined
           label="SWIFT"
-          class="text-field pl-3"
+          class="text-field pl-3 mobile-row_field"
           counter="25"
           reqired
         />
       </v-row-container>
-      <v-row-container>
+      <v-row-container class="mobile-row">
         <v-col-container>
           <v-form-select
             :options="this.$store.state.countries.countriesList"
             @select="countrySelect"
             :selected="selectedCountry"
             placeholder="Bank Country"
-            class="pr-3"
+            class="pr-3 mobile-row_field"
           />
         </v-col-container>
         <v-col-container>
@@ -55,7 +55,7 @@
             @select="currencySelect"
             :selected="selectedCurrency"
             placeholder="Currency"
-            class="pl-3"
+            class="pl-3 mobile-row_field mt-s"
           />
         </v-col-container>
       </v-row-container>
@@ -128,8 +128,26 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .card {
+  padding: 40px !important;
   position: relative;
+}
+
+@media screen and (max-width: 768px) {
+  .mobile-row {
+    flex-direction: column;
+    &_field {
+      padding: 0 !important;
+    }
+  }
+
+  .mt-s {
+    margin-top: 30px !important;
+  }
+
+  .card {
+    padding: 10px !important;
+  }
 }
 </style>

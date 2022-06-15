@@ -5,7 +5,7 @@
     persistent
     transition="dialog-bottom-transition"
   >
-    <v-card width="774" elevation="0" class="px-10 py-10 card">
+    <v-card width="774" elevation="0" class="card">
       <v-modal-button-close @click="closePersonalData" />
       <v-form-label label="Personal Data" class="mb-4 mt-0" />
       <v-row-container>
@@ -154,8 +154,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .card {
+  padding: 40px;
   position: relative;
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    padding: 10px !important;
+  }
 }
 </style>

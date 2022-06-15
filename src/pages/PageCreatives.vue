@@ -6,28 +6,14 @@
       buttonTitle="Add Creative"
       @buttonClick="openModalAddCreative"
     />
-
-    <v-row-container>
-      <v-row-container>
-        <v-checkbox
-          v-for="(checkbox, id) in checkboxes"
-          :key="id"
-          :label="checkbox"
-          class="chckbox"
-          color="primary"
-        ></v-checkbox>
-      </v-row-container>
-      <v-row-container :style="{ width: '450px' }">
-        <v-text-field
-          label="Search by bundle or creative name"
-          prepend-inner-icon="mdi-magnify"
-          class="search-field"
-        />
-      </v-row-container>
-    </v-row-container>
-    <base-table
-      :headers="this.$store.state.tablesHeaders.creativesTableHeaders"
-      :items="this.$store.state.creatives.creativesList"
+    <prime-table
+      :table-data="this.$store.state.creatives.creativesList"
+      :columns="this.$store.state.tableColumns.creativesTableColumns"
+      :is-search-enabled="true"
+      search-width="450px"
+      search-label="Search by bundle or creative name"
+      :is-checkboxes-enabled="true"
+      :checkboxes="checkboxes"
     />
     <the-modal-add-creative />
   </div>
@@ -36,6 +22,7 @@
 <script>
 import BaseTable from "@/components/BaseTable.vue";
 import TheModalAddCreative from "@/components/TheModalAddCreative.vue";
+import PrimeTable from "@/components/PrimeTable.vue";
 import { mapMutations } from "vuex";
 
 export default {
@@ -43,10 +30,28 @@ export default {
   components: {
     BaseTable,
     TheModalAddCreative,
+    PrimeTable,
   },
   data() {
     return {
-      checkboxes: ["Banner", "Interstitial", "Rewarded", "Archived creatives"],
+      checkboxes: [
+        {
+          name: "Banner",
+          color: "primary",
+        },
+        {
+          name: "Interstitial",
+          color: "primary",
+        },
+        {
+          name: "Rewarded",
+          color: "primary",
+        },
+        {
+          name: "Archived creatives",
+          color: "primary",
+        },
+      ],
     };
   },
   methods: {

@@ -1,40 +1,39 @@
 <template>
   <div class="content">
-    <the-page-header
-        pageTitle="Payments info"
+    <the-page-header pageTitle="Payments info" :have-button="false" />
+    <prime-table
+      :columns="this.$store.state.tableColumns.paymentsTableColumns"
+      :table-data="this.$store.state.payments.paymentsList"
     />
-    <base-table
-        :headers="this.$store.state.tablesHeaders.paymentsTableHeaders"
-        :items="this.$store.state.payments.paymentsList"
-    ></base-table>
   </div>
 </template>
 
 <script>
 import BaseTable from "@/components/BaseTable.vue";
+import ScrollTable from "@/components/ScrollTable.vue";
+import PrimeTable from "@/components/PrimeTable.vue";
 export default {
   name: "PageMyPayments",
-  components:{
+  components: {
     BaseTable,
+    ScrollTable,
+    PrimeTable,
   },
-  data(){
-    return {}
+  data() {
+    return {};
   },
-  methods:{
-
-  }
-}
+  methods: {},
+};
 </script>
 
 <style scoped>
-
-.test{
+.test {
   position: relative;
   cursor: pointer;
   border-radius: 10px;
 }
 
-.super{
+.super {
   position: absolute;
   border-radius: 10px;
 }

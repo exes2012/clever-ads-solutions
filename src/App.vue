@@ -1,9 +1,10 @@
 <template>
   <v-app class="application" id="App">
-    <the-app-header/>
+    <the-app-header v-if="headerState === 'normal'" />
+    <the-mobile-header v-if="headerState === 'mobile'" />
     <v-main>
       <the-container>
-        <router-view/>
+        <router-view />
       </the-container>
     </v-main>
   </v-app>
@@ -11,33 +12,48 @@
 
 <script>
 import TheAppHeader from "@/components/TheAppHeader";
+import TheMobileHeader from "@/components/TheMobileHeader";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    TheAppHeader
+    TheAppHeader,
+    TheMobileHeader,
   },
 
-
-  data(){
-    return{
-      items: ['$USD', 'EUR'],
-    }
+  data() {
+    return {
+      headerState: null,
+    };
   },
-  methods:{
-    forcedOriginScale(containerId){
-      let App=document.getElementById(containerId)
-      App.style.zoom = 1/devicePixelRatio;
-    }
+  methods: {
+    // forcedOriginScale(containerId) {
+    //   let App = document.getElementById(containerId);
+    //   App.style.zoom = 1 / devicePixelRatio;
+    // },
+
+    updateHeaderState() {
+      if (window.innerWidth < 1280) {
+        this.headerState = "mobile";
+      }
+
+      if (window.innerWidth >= 1280) {
+        this.headerState = "normal";
+      }
+    },
   },
   mounted() {
-    this.forcedOriginScale('App')
-  }
+    // this.forcedOriginScale("App");
+    this.updateHeaderState();
+  },
+  created() {
+    window.addEventListener("resize", this.updateHeaderState);
+  },
 };
 </script>
 
-<style  lang="scss">
-.application{
+<style lang="scss">
+.application {
   width: 100%;
 }
 </style>

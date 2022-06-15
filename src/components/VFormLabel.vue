@@ -1,26 +1,32 @@
 <template>
   <div class="form-label">
-    <label>{{label}}</label>
+    <label>{{ label }}</label>
   </div>
 </template>
 
 <script>
 export default {
   name: "BaseFormLabel",
-  props:{
-    label:{
-      type:String,
-      default:""
-    }
-  }
-}
+  props: {
+    label: {
+      type: String,
+      default: "",
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
-.form-label{
+.form-label {
   font-size: 24px;
   font-weight: 700;
   display: flex;
   max-width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .form-label {
+    font-size: 18px;
+  }
 }
 </style>

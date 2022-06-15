@@ -6,17 +6,12 @@
       buttonTitle="Add Application"
       @buttonClick="openModalAddApplication"
     />
-    <v-row-container :style="{ width: '300px' }" class="ml-auto">
-      <v-text-field
-        label="Search App"
-        prepend-inner-icon="mdi-magnify"
-        class="search-field"
-      />
-    </v-row-container>
-    <base-table
-      :headers="this.$store.state.tablesHeaders.applicationsTableHeaders"
-      :items="this.$store.state.applications.appList"
-    ></base-table>
+    <prime-table
+      :table-data="this.$store.state.applications.appList"
+      :columns="this.$store.state.tableColumns.applicationsTableColumns"
+      :is-search-enabled="true"
+      search-label="Search app"
+    />
 
     <the-modal-add-application
       v-if="$store.state.applications.isModalAddApplicationOpen"
@@ -27,6 +22,7 @@
 <script>
 import BaseTable from "@/components/BaseTable.vue";
 import TheModalAddApplication from "@/components/TheModalAddApplication.vue";
+import PrimeTable from "@/components/PrimeTable.vue";
 import { mapMutations, mapState } from "vuex";
 
 export default {
@@ -34,6 +30,7 @@ export default {
   components: {
     BaseTable,
     TheModalAddApplication,
+    PrimeTable,
   },
   data() {
     return {

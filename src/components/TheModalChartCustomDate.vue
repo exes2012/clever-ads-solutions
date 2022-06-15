@@ -1,31 +1,26 @@
 <template>
-  <base-modal form-width="774px" @on-close="closeAdmobAppIdModal">
-    <base-form-label
-      label="Admob App ID for com.ulimedia.chasecraft"
-      class="mx-auto"
-    />
-    <div class="app-id">{{ admobAppId }}</div>
-    <div class="app-id_description">
-      Copy the ID above and follow the instructios for <span>Android</span> or
-      <span>iOS</span>
-    </div>
-    <v-btn
-      class="app-id_btn"
-      button-class="btn-filter-apply"
-      @click="closeAdmobAppIdModal"
-      >Close</v-btn
-    >
-  </base-modal>
+  <v-dialog
+    v-model="this.$store.state.filters.isDatepickerModalOpen"
+    max-width="774"
+    transition="dialog-bottom-transition"
+    persistent
+  >
+    <v-card elevation="0" class="px-10 py-10 card" width="774">
+      <v-modal-button-close @click="closeDatepickerModal" />
+      <v-form-label label="Date range" class="mx-auto" />
+      <the-date-picker />
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
-import BaseModal from "@/components/BaseModal.vue";
+import TheDatePicker from "@/components/TheDatePicker.vue";
 import { mapMutations } from "vuex";
 
 export default {
   name: "BaseTableModalAdmobId",
   components: {
-    BaseModal,
+    TheDatePicker,
   },
   props: {
     admobAppId: {
@@ -33,7 +28,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations("applications", ["closeAdmobAppIdModal"]),
+    ...mapMutations("filters", ["closeDatepickerModal"]),
   },
 };
 </script>
@@ -61,5 +56,10 @@ export default {
     margin: 0 auto;
     width: 180px;
   }
+}
+
+.buttons {
+  margin-top: 36px;
+  padding-right: 9px;
 }
 </style>

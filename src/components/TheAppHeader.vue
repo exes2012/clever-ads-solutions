@@ -26,7 +26,7 @@ import TheUserBar from "@/components/TheUserBar.vue";
 import TheCurrencySelector from "@/components/TheCurrencySelector.vue";
 import TheLogoMain from "@/components/TheLogoMain.vue";
 import HeaderNavLink from "@/components/HeaderNavLink.vue";
-import DividerVertical from "@/components/DividerVertical.vue";
+import DividerVertical from "@/components/VDividerVertical.vue";
 import TheUserAccount from "@/components/TheUserAccount.vue";
 import TheDropdownUser from "@/components/TheUserAccountDropdown.vue";
 import DropdownUserListItem from "@/components/UserAccountDropdownItem.vue";

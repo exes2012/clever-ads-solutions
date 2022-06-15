@@ -1,15 +1,17 @@
 <template>
   <div>
-    <div class="chart">
-      <canvas id="myChart" width="400" height="165"></canvas>
+    <div class="chart_container">
+      <div class="chart" :class="toggleClass">
+        <canvas id="myChart"></canvas>
+      </div>
     </div>
     <div class="legend">
       <div class="legend_border"></div>
       <div id="legend" class="legend_item">
         <ul class="legend_list" v-if="showChart">
           <li class="legend_list-item" @click="resetLegendItems(myChart)">
-            <base-icon name="clarityEyeClosed" />
-            <p class="legend_item-text disabled">Show all</p>
+            <base-icon class="legend_list-icon" name="clarityEyeClosed" />
+            <div class="legend_item-text disable">Show all</div>
           </li>
           <li
             class="legend_list-item"
@@ -19,21 +21,22 @@
             v-if="legendItem.datasetIndex !== 0"
           >
             <base-icon
+              class="legend_list-icon"
               :name="
                 !myChart.isDatasetVisible(legendItem.datasetIndex)
                   ? 'clarityEyeClosed'
                   : 'clarityEye'
               "
             />
-            <p
+            <div
               class="legend_item-text"
               :style="{ color: legendItem.strokeStyle }"
               :class="{
-                disabled: !myChart.isDatasetVisible(legendItem.datasetIndex),
+                disable: !myChart.isDatasetVisible(legendItem.datasetIndex),
               }"
             >
               {{ legendItem.text }}
-            </p>
+            </div>
           </li>
         </ul>
       </div>
@@ -96,15 +99,25 @@ Chart.register(
   Tooltip,
   SubTitle
 );
-import planetChartData from "@/planet-data";
 import { mapMutations } from "vuex";
 export default {
   name: "CustomChart",
   components: {},
-
+  props: {
+    toggleClass: {
+      type: String,
+    },
+    chartWidth: {
+      type: Number,
+      default: 375,
+    },
+    chartHeight: {
+      type: Number,
+      default: 450,
+    },
+  },
   data() {
     return {
-      planetChartData: planetChartData,
       myChart: null,
       legendItems: null,
       disabledId: null,
@@ -112,9 +125,42 @@ export default {
     };
   },
   mounted() {
+    let mobileSize = false;
+    let barBorderRadius = 8;
+    let barBorderThick = 2;
+    let lineThick = 3;
+    let circleRadius = 5;
+    let circleRoundRadius = 10;
+    let barPercentage;
+
     const ctx = "myChart";
     Chart.defaults.font.family = "'GothamPro'";
     Chart.defaults.font.size = 14;
+
+    function resizeFont() {
+      if (window.innerWidth < 768) {
+        Chart.defaults.font.size = 11;
+        mobileSize = true;
+        barBorderRadius = 8;
+        barBorderThick = 1;
+        lineThick = 2;
+        circleRadius = 5;
+        circleRoundRadius = 10;
+        barPercentage = 0.8;
+      } else {
+        Chart.defaults.font.size = 14;
+        mobileSize = false;
+        barBorderRadius = 8;
+        barBorderThick = 2;
+        lineThick = 3;
+        circleRadius = 5;
+        circleRoundRadius = 10;
+        barPercentage = 0.3;
+      }
+    }
+
+    resizeFont();
+    window.addEventListener("resize", resizeFont);
 
     const tooltipLine = {
       id: "tooltipLine",
@@ -147,7 +193,7 @@ export default {
               ctx.arc(
                 tooltip._active[i].element.x,
                 tooltip._active[i].element.y,
-                5,
+                circleRadius,
                 0,
                 2 * Math.PI,
                 false
@@ -260,11 +306,21 @@ export default {
         const { offsetLeft: positionX, offsetTop: positionY } = chart.canvas;
 
         if (tooltip.body.length < 2) {
-          tooltipEL.style.left = positionX + tooltip.caretX - 80 + "px";
-          tooltipEL.style.top = positionY / 2 + tooltip.caretY + 80 + "px";
+          if (mobileSize === true) {
+            tooltipEL.style.left = positionX + tooltip.caretX + 20 + "px";
+            tooltipEL.style.top = positionY + tooltip.caretY - 100 + "px";
+          } else {
+            tooltipEL.style.left = positionX + tooltip.caretX - 80 + "px";
+            tooltipEL.style.top = positionY / 2 + tooltip.caretY + 80 + "px";
+          }
         } else {
-          tooltipEL.style.left = positionX + tooltip.caretX - 100 + "px";
-          tooltipEL.style.top = positionY / 2 + tooltip.caretY + "px";
+          if (mobileSize === true) {
+            tooltipEL.style.left = positionX + tooltip.caretX + 20 + "px";
+            tooltipEL.style.top = positionY + tooltip.caretY - 150 + "px";
+          } else {
+            tooltipEL.style.left = positionX + tooltip.caretX - 100 + "px";
+            tooltipEL.style.top = positionY / 2 + tooltip.caretY + "px";
+          }
         }
       }
     };
@@ -280,10 +336,10 @@ export default {
             data: [108, 19, 295, 113, 211, 12],
             backgroundColor: ["rgba(244, 244, 244, 0.5)"],
             borderColor: ["#DFDFDF"],
-            borderWidth: 2,
-            borderRadius: 8,
+            borderWidth: barBorderThick,
+            borderRadius: barBorderRadius,
             borderSkipped: false,
-            barPercentage: 0.25,
+            barPercentage: barPercentage,
             order: 2,
             yAxisID: "y1",
           },
@@ -294,7 +350,7 @@ export default {
             data: [12, 19, 3, 5, 2, 3],
             backgroundColor: ["transparent"],
             borderColor: ["#0DC100"],
-            borderWidth: 3,
+            borderWidth: lineThick,
             yAxisID: "y",
             pointStyle: "Rounded",
             pointBorderWidth: 1,
@@ -304,7 +360,7 @@ export default {
             pointHoverWidth: 50,
             pointHoverBackgroundColor: "white",
             pointHoverBorderWidth: 3,
-            pointHoverRadius: 10,
+            pointHoverRadius: circleRoundRadius,
             radius: 1,
           },
           {
@@ -314,7 +370,7 @@ export default {
             data: [9, 32, 12, 2, 12, 23],
             backgroundColor: ["transparent"],
             borderColor: ["#EC0000"],
-            borderWidth: 3,
+            borderWidth: lineThick,
             pointBorderWidth: 1,
             yAxisID: "y",
             pointBorderColor: "#EC0000",
@@ -322,7 +378,7 @@ export default {
             pointHoverWidth: 50,
             pointHoverBackgroundColor: "white",
             pointHoverBorderWidth: 3,
-            pointHoverRadius: 10,
+            pointHoverRadius: circleRoundRadius,
             pointHoverBorderColor: "#EC0000",
             radius: 0.5,
           },
@@ -330,6 +386,7 @@ export default {
       },
       plugins: [tooltipLine],
       options: {
+        maintainAspectRatio: false,
         plugins: {
           tooltip: {
             enabled: false,
@@ -346,30 +403,48 @@ export default {
         },
         scales: {
           x: {
+            ticks: {
+              color: "#A3A3A3",
+              font: {
+                weight: 400,
+              },
+            },
             grid: {
               drawOnChartArea: false,
               borderWidth: 1,
-              borderColor: "#A3A3A3",
+              borderColor: "#DFDFDF",
               tickColor: "#FFFFFF",
             },
           },
           y: {
+            ticks: {
+              color: "#A3A3A3",
+              font: {
+                weight: 400,
+              },
+            },
             beginAtZero: true,
             grid: {
               drawOnChartArea: false,
               borderDashOffset: 0,
               borderWidth: 1,
-              borderColor: "#A3A3A3",
+              borderColor: "#DFDFDF",
               tickColor: "#FFFFFF",
             },
           },
           y1: {
+            ticks: {
+              color: "#A3A3A3",
+              font: {
+                weight: 400,
+              },
+            },
             beginAtZero: true,
             position: "right",
             grid: {
               drawOnChartArea: false,
               borderWidth: 1,
-              borderColor: "#A3A3A3",
+              borderColor: "#DFDFDF",
               tickColor: "#FFFFFF",
             },
           },
@@ -433,7 +508,8 @@ export default {
 
 <style lang="scss">
 .chart {
-  padding: 20px;
+  height: 422px;
+  padding: 0 20px;
 }
 
 .tooltipDesign {
@@ -490,6 +566,10 @@ export default {
     list-style: none;
     flex-wrap: wrap;
   }
+  &_list-icon {
+    display: flex;
+    align-items: center;
+  }
   &_list-item {
     display: flex;
     align-items: center;
@@ -498,6 +578,7 @@ export default {
     height: 26px;
   }
   &_item-text {
+    display: flex;
     margin: 0 0 0 8px;
     font-weight: 500;
     font-size: 14px;
@@ -505,7 +586,68 @@ export default {
   }
 }
 
-.disabled {
+.disable {
   color: #bacade !important;
+}
+
+@media screen and (max-width: 768px) {
+  .chart {
+    padding: 0;
+    &_container {
+      overflow-x: hidden;
+    }
+  }
+  .legend {
+    &_item {
+      display: flex;
+      padding: 0;
+      margin: 10px;
+    }
+    &_border {
+      margin: 10px 0 0 0;
+      height: 2px;
+    }
+    &_list-item {
+      margin-left: 20px;
+      margin-right: 0;
+    }
+  }
+  #myChart {
+    width: 375px;
+    height: 450px;
+  }
+
+  .toggleLeft {
+    transition: all 1s ease-out;
+    width: 110%;
+    float: right;
+  }
+  .toggleRight {
+    width: 110%;
+    float: left;
+    transition: all 1s ease-out;
+  }
+  .toggleAll {
+    width: 120%;
+    margin-left: -10%;
+    transition: all 1s ease-out;
+  }
+  .untoggleAll {
+    width: 100%;
+    margin: 0;
+    transition: all 1s ease-out;
+  }
+  .untoggleLeft {
+    width: 100%;
+    margin: 0;
+    float: right;
+    transition: all 1s ease-out;
+  }
+  .untoggleRight {
+    width: 100%;
+    margin: 0;
+    float: left;
+    transition: all 1s ease-out;
+  }
 }
 </style>

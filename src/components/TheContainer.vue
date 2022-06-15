@@ -6,33 +6,28 @@
 
 <script>
 export default {
-  name: "TheContainer"
-}
+  name: "TheContainer",
+};
 </script>
 
 <style scoped>
-.the-container{
+.the-container {
   display: flex;
   margin: 0 auto;
-  width: 1280px;
+  max-width: 1280px;
+}
+
+@media (max-width: 1024px) {
+  .the-container {
+    max-width: 1024px;
+    padding: 0 10px;
+  }
 }
 
 @media (max-width: 640px) {
-  .the-container{
+  .the-container {
     max-width: 640px;
-    padding: 0 20px;
-  }
-}
-@media (max-width: 768px) {
-  .the-container{
-    max-width: 768px;
-    padding: 0 20px;
-  }
-}
-@media (max-width: 1024px) {
-  .the-container{
-    max-width: 1024px;
-    padding: 0 20px;
+    padding: 0;
   }
 }
 </style>

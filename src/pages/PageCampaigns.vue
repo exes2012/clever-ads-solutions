@@ -6,27 +6,14 @@
       buttonTitle="Add Campaign"
       @buttonClick="openModalAddCampaign"
     />
-    <v-row-container>
-      <v-row-container>
-        <v-checkbox
-          v-for="(checkbox, id) in checkboxes"
-          :key="id"
-          :label="checkbox.name"
-          class="chckbox"
-          :color="checkbox.color"
-        ></v-checkbox>
-      </v-row-container>
-      <v-row-container :style="{ width: '300px' }">
-        <v-text-field
-          label="Search by name"
-          prepend-inner-icon="mdi-magnify"
-          class="search-field"
-        />
-      </v-row-container>
-    </v-row-container>
-    <base-table
-      :headers="this.$store.state.tablesHeaders.campaignsTableHeaders"
-      :items="this.$store.state.campaigns.campaignsList"
+    <prime-table
+      :table-data="this.$store.state.campaigns.campaignsList"
+      :columns="this.$store.state.tableColumns.campaignsTableColumns"
+      :is-search-enabled="true"
+      search-width="300px"
+      search-label="Search by name"
+      :is-checkboxes-enabled="true"
+      :checkboxes="checkboxes"
     />
     <the-modal-add-campaign />
   </div>
@@ -36,8 +23,9 @@
 import { mapMutations } from "vuex";
 import TheModalAddCampaign from "@/components/TheModalAddCampaign.vue";
 import TheCurrencySelector from "@/components/TheCurrencySelector.vue";
-import BaseMultiSelect from "@/components/BaseMultiSelect.vue";
+import BaseMultiSelect from "@/components/VMultiSelect.vue";
 import BaseTable from "@/components/BaseTable.vue";
+import PrimeTable from "@/components/PrimeTable.vue";
 
 export default {
   name: "PageCampaigns",
@@ -46,6 +34,7 @@ export default {
     TheModalAddCampaign,
     BaseMultiSelect,
     BaseTable,
+    PrimeTable,
   },
   data() {
     return {

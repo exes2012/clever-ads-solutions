@@ -71,7 +71,6 @@ export default {
   order: 1;
   position: absolute;
   top: 30px;
-  z-index: 15;
   padding: 16px 0;
 }
 
@@ -110,13 +109,10 @@ export default {
   height: 12px;
   width: 12px;
   right: 10px;
-  top: 7px;
+  top: 9px;
   transition: all 0.4s;
 }
 
 @media screen and (max-width: 1200px) {
-  .selected{
-    font-size: 14px;
-  }
 }
 </style>

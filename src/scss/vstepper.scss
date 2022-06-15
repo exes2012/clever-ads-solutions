@@ -84,3 +84,13 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .stepper_radio{
+    .v-label {
+      font-weight: 500;
+      font-size: 12px;
+      color: #1F2024 !important;
+    }
+  }
+}

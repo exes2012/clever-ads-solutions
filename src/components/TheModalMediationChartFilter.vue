@@ -7,10 +7,10 @@
       transition="dialog-bottom-transition"
       class="dialog"
     >
-      <v-card width="500" elevation="0" class="px-7 py-10 card">
+      <v-card width="500" elevation="0" class="card">
         <v-modal-button-close @click="closeFilterModal" />
         <form @submit.prevent="">
-          <div class="form-label">Application</div>
+          <div class="form-label mt-0">Application</div>
           <base-multi-select
             :options="this.$store.state.applications.appList"
             display-property="appName"
@@ -18,7 +18,7 @@
             v-model="selectedApps"
             :placeholder="'Choose an application'"
           />
-          <div class="form-label mt-5">Countries</div>
+          <div class="form-label">Countries</div>
           <v-row-container>
             <v-radio-group
               class="stepper_radio-wrap"
@@ -49,7 +49,7 @@
             :placeholder="'Choose the country'"
           />
           <div v-else class="disabled">All countries</div>
-          <div class="form-label mt-5">Network</div>
+          <div class="form-label">Network</div>
           <v-row-container>
             <v-radio-group
               class="stepper_radio-wrap"
@@ -80,7 +80,7 @@
             :placeholder="'Choose network'"
           />
           <div v-else class="disabled">All Networks</div>
-          <div class="form-label mt-4">Ad Type</div>
+          <div class="form-label">Ad Type</div>
           <div class="d-flex">
             <v-checkbox
               label="Banner"
@@ -88,6 +88,7 @@
               v-model="selectedAdType"
               class="chckbox mt-0"
               color="#0074FF"
+              hide-details
             ></v-checkbox>
             <v-checkbox
               label="Intertial"
@@ -95,6 +96,7 @@
               v-model="selectedAdType"
               class="chckbox mt-0"
               color="#0074FF"
+              hide-details
             ></v-checkbox>
             <v-checkbox
               label="Rewarded"
@@ -102,9 +104,10 @@
               v-model="selectedAdType"
               class="chckbox mt-0"
               color="#0074FF"
+              hide-details
             ></v-checkbox>
           </div>
-          <div class="form-label mt-2">Platform</div>
+          <div class="form-label">Platform</div>
           <div class="d-flex">
             <v-checkbox
               label="iOS"
@@ -112,6 +115,7 @@
               v-model="selectedPlatform"
               class="chckbox mt-0"
               color="#0074FF"
+              hide-details
             ></v-checkbox>
             <v-checkbox
               label="Android"
@@ -119,13 +123,14 @@
               v-model="selectedPlatform"
               class="chckbox ml-8 mt-0"
               color="#0074FF"
+              hide-details
             ></v-checkbox>
           </div>
           <v-row-container class="justify-end">
             <v-btn
               text
               color="error"
-              class="form_btn"
+              class="filter_btn"
               width="100"
               height="53"
               @click="resetFilterModalSelection"
@@ -134,7 +139,7 @@
             <v-btn
               depressed
               color="primary"
-              class="ml-7"
+              class="ml-7 filter_btn"
               width="180"
               height="53"
               @click="submitFilterModal"
@@ -148,8 +153,7 @@
 </template>
 
 <script>
-import BaseModal from "@/components/BaseModal";
-import BaseMultiSelect from "@/components/BaseMultiSelect.vue";
+import BaseMultiSelect from "@/components/VMultiSelect.vue";
 import VModalButtonClose from "@/components/VModalButtonClose.vue";
 
 import { mapMutations, mapState } from "vuex";
@@ -159,7 +163,6 @@ import axios from "axios";
 export default {
   name: "UserAccountPersonalData",
   components: {
-    BaseModal,
     BaseMultiSelect,
     VModalButtonClose,
   },
@@ -221,10 +224,14 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .form-label {
   font-size: 18px;
   font-weight: 500;
+}
+
+.form-label {
+  margin-top: 20px;
 }
 
 .chckbox label {
@@ -243,5 +250,33 @@ export default {
   margin: 10px 0;
   height: 59px;
   font-size: 18px;
+}
+
+.card {
+  padding: 40px 28px;
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    padding: 15px 15px;
+  }
+
+  .form-label {
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  .chckbox label {
+    color: black;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: normal;
+    margin-right: 40px;
+  }
+
+  .disabled {
+    margin: 5px 0;
+    height: 30px;
+    font-size: 14px;
+  }
 }
 </style>

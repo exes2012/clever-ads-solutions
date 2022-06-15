@@ -7,12 +7,16 @@
     />
     <the-indicators-bar />
     <the-mediation-chart />
-    <base-table
-      :headers="this.$store.state.tablesHeaders.mediationTableHeaders"
-      :items="this.$store.state.applications.appList"
-      :totals="true"
-    >
-    </base-table>
+    <!--    <scroll-table-->
+    <!--      :headers="this.$store.state.tablesHeaders.mediationTableHeaders"-->
+    <!--      :items="this.$store.state.applications.appList"-->
+    <!--      :totals="true"-->
+    <!--    >-->
+    <!--    </scroll-table>-->
+    <prime-table
+      :columns="this.$store.state.tableColumns.mediationTableColumns"
+      :table-data="this.$store.state.applications.appList"
+    />
     <the-modal-chart-custom-date />
   </div>
 </template>
@@ -21,6 +25,8 @@ import TheIndicatorsBar from "@/components/TheIndicatorsBar.vue";
 import TheMediationChart from "@/components/TheMediationChart.vue";
 import BaseTable from "@/components/BaseTable";
 import TheModalChartCustomDate from "@/components/TheModalChartCustomDate.vue";
+import ScrollTable from "@/components/ScrollTable.vue";
+import PrimeTable from "@/components/PrimeTable.vue";
 import { format, subDays } from "date-fns";
 
 import axios from "@/api";
@@ -33,10 +39,14 @@ export default {
     TheMediationChart,
     TheModalChartCustomDate,
     BaseTable,
+    ScrollTable,
+    PrimeTable,
     // eslint-disable-next-line
   },
   data() {
-    return {};
+    return {
+      tableData: null,
+    };
   },
 
   methods: {
@@ -55,11 +65,5 @@ export default {
 <style scoped>
 .content {
   width: 100%;
-}
-
-.calendar {
-  width: 400px;
-  height: 400px;
-  margin: 0 auto;
 }
 </style>

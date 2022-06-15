@@ -281,7 +281,7 @@ import { mapMutations } from "vuex";
 import VModalButtonClose from "@/components/VModalButtonClose.vue";
 import VFormSelect from "@/components/VFormSelect.vue";
 import VFormLabel from "@/components/VFormLabel.vue";
-import BaseMultiSelect from "@/components/BaseMultiSelect.vue";
+import BaseMultiSelect from "@/components/VMultiSelect.vue";
 import VDividerHorizontal from "@/components/VDividerHorizontal.vue";
 import VDragNDrop from "@/components/VDragNDrop.vue";
 

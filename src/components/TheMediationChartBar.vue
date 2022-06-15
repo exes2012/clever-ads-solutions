@@ -1,20 +1,35 @@
 <template>
   <div class="chart-bar">
-    <v-btn text @click="getYesterday" :class="{ active: activeButtonId === 1 }"
-      >Yesterday</v-btn
-    >
-    <v-btn text @click="getSevenDays" :class="{ active: activeButtonId === 2 }"
-      >7 days</v-btn
-    >
-    <v-btn text @click="getThirtyDays" :class="{ active: activeButtonId === 3 }"
-      >30 days</v-btn
-    >
-    <v-btn
-      text
-      @click="getCustomDateRange"
-      :class="{ active: activeButtonId === 4 }"
-      >Custom</v-btn
-    >
+    <div class="chart-bar_buttons">
+      <v-btn
+        class="chart-bar_btn"
+        text
+        @click="getYesterday"
+        :class="{ active: activeButtonId === 1 }"
+        >Yesterday</v-btn
+      >
+      <v-btn
+        class="chart-bar_btn"
+        text
+        @click="getSevenDays"
+        :class="{ active: activeButtonId === 2 }"
+        >7 days</v-btn
+      >
+      <v-btn
+        class="chart-bar_btn"
+        text
+        @click="getThirtyDays"
+        :class="{ active: activeButtonId === 3 }"
+        >30 days</v-btn
+      >
+      <v-btn
+        class="chart-bar_btn"
+        text
+        @click="getCustomDateRange"
+        :class="{ active: activeButtonId === 4 }"
+        >Custom</v-btn
+      >
+    </div>
     <div class="select-bar">
       <div class="select-bar_title">View by:</div>
       <base-selector
@@ -24,13 +39,14 @@
         :options-width="'140px'"
       />
       <the-compare-selector
+        v-if="barState === 'normal'"
         :options="optionsCompare"
         @select="compareSelect"
         :selected="selectedCompare"
         :options-width="'300px'"
       />
+      <the-mediation-chart-filter @click="openFilterModal" />
     </div>
-    <the-mediation-chart-filter @click="openFilterModal" />
     <the-mediation-chart-filter-modal
       v-if="this.$store.state.filters.isFilterModalOpen"
     />
@@ -54,6 +70,7 @@ export default {
   },
   data() {
     return {
+      barState: null,
       selectedViewBy: {
         name: "Default",
         value: "1",
@@ -126,9 +143,20 @@ export default {
       this.activeButtonId = 4;
       this.openDatepickerModal();
     },
+    updateBarState() {
+      if (window.innerWidth >= 768) {
+        this.barState = "normal";
+      } else {
+        this.barState = null;
+      }
+    },
   },
   mounted() {
     this.getSevenDays();
+    this.updateBarState();
+  },
+  created() {
+    window.addEventListener("resize", this.updateBarState);
   },
 };
 </script>
@@ -145,7 +173,10 @@ export default {
   align-items: center;
   margin-left: auto;
   &_title {
+    text-align: center;
+    width: 70px;
     margin-right: 12px;
+    margin-left: 10px;
     font-weight: 500;
   }
 }
@@ -153,5 +184,35 @@ export default {
 .active {
   background: #0074ff;
   color: white;
+}
+
+@media screen and (max-width: 1280px) {
+  .chart-bar {
+    -ms-overflow-style: none;
+    align-items: start;
+    margin: 0;
+    padding: 10px 0;
+    border-top: 2px solid #efefef;
+    border-bottom: 2px solid #efefef;
+    max-height: 57px;
+    overflow-x: scroll;
+    overflow-y: visible;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    &_buttons {
+      display: flex;
+      padding: 0 10px;
+      border-right: 2px solid #efefef;
+    }
+    &_btn {
+      font-size: 14px !important;
+      padding: 4px 10px !important;
+      height: 33px !important;
+    }
+  }
+
+  .select-bar {
+  }
 }
 </style>

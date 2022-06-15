@@ -12,6 +12,8 @@ import VColContainer from "@/components/VColContainer.vue";
 import VFormLabel from "@/components/VFormLabel.vue";
 import VModalButtonClose from "@/components/VModalButtonClose.vue";
 import BaseIcon from "@/components/BaseIcon.vue";
+import PrimeVue from "primevue/config";
+import "primeicons/primeicons.css";
 
 Vue.config.productionTip = false;
 Vue.component("the-page-header", ThePageHeader);
@@ -19,10 +21,10 @@ Vue.component("the-container", TheContainer);
 Vue.component("v-row-container", VRowContainer);
 Vue.component("v-col-container", VColContainer);
 Vue.component("v-form-label", VFormLabel);
-Vue.component("v-moda-button-close", VModalButtonClose);
+Vue.component("v-modal-button-close", VModalButtonClose);
 Vue.component("base-icon", BaseIcon);
 
-Vue.use(vuetify);
+Vue.use(vuetify, PrimeVue);
 
 new Vue({
   router,
