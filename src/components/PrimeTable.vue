@@ -1,5 +1,5 @@
 <template>
-  <div class="main_table">
+  <div>
     <v-row-container>
       <v-row-container v-if="isCheckboxesEnabled">
         <v-checkbox
@@ -53,7 +53,9 @@
                   : slotProps.data.id
               }}
             </div>
-            <div>{{ slotProps.data.appName }}</div>
+            <div class="table_company-appname">
+              {{ slotProps.data.appName }}
+            </div>
           </div>
           <div v-else-if="column.field === 'year'">
             <div>{{ slotProps.data.year }}</div>
@@ -85,7 +87,12 @@
               column.field === 'types' ||
               column.field === 'campaignName' ||
               column.field === 'status' ||
-              column.field === 'locations'
+              column.field === 'locations' ||
+              column.field === 'accuralSum' ||
+              column.field === 'paymentDate' ||
+              column.field === 'paymentSum' ||
+              column.field === 'currentBalance' ||
+              column.field === 'period'
             "
             class="table_start"
           >
@@ -341,10 +348,7 @@ export default {
   }
   &_start {
     display: block;
-    width: 80%;
-    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
   }
   &_center {
     display: flex;
@@ -399,9 +403,13 @@ export default {
       }
     }
   }
-}
-
-.main_table {
-  margin-bottom: 100px;
+  .table {
+    &_company-appname {
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }
 </style>

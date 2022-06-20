@@ -2,7 +2,7 @@
   <div class="mediation-chart">
     <TheMediationChartBar />
     <v-divider-horizontal class="pl-5 pr-5 hide" />
-    <v-row-container>
+    <v-row-container class="mediation-chart_buttons">
       <v-btn
         text
         class="mediation-chart_toggle"
@@ -100,6 +100,9 @@ export default {
   border: 2px solid #efefef;
   box-shadow: 4px 4px 20px rgba(0, 8, 81, 0.1);
   border-radius: 16px;
+  &_buttons {
+    display: none;
+  }
   &_toggle {
     width: 32px !important;
     height: 32px !important;
@@ -122,6 +125,9 @@ export default {
     border: none;
     box-shadow: none;
     min-height: 300px;
+    &_buttons {
+      display: flex;
+    }
   }
 
   .hide {

@@ -10,6 +10,9 @@
       <v-card width="500" elevation="0" class="card">
         <v-modal-button-close @click="closeFilterModal" />
         <form @submit.prevent="">
+          <v-btn text color="primary" @click="openCustomFilters = true"
+            >Saved filters <v-icon right dark> mdi-open-in-new </v-icon></v-btn
+          >
           <div class="form-label mt-0">Application</div>
           <base-multi-select
             :options="this.$store.state.applications.appList"
@@ -129,8 +132,17 @@
           <v-row-container class="justify-end">
             <v-btn
               text
-              color="error"
+              color="green"
               class="filter_btn"
+              width="100"
+              height="53"
+              @click="saveCustomFilter = true"
+              >Save filter
+            </v-btn>
+            <v-btn
+              text
+              color="error"
+              class="filter_btn ml-4"
               width="100"
               height="53"
               @click="resetFilterModalSelection"
@@ -149,12 +161,81 @@
         </form>
       </v-card>
     </v-dialog>
+    <v-dialog
+      v-model="saveCustomFilter"
+      max-width="500"
+      transition="dialog-bottom-transition"
+      persistent
+    >
+      <v-card
+        width="500"
+        height="250"
+        elevation="0"
+        class="card d-flex flex-column"
+      >
+        <v-modal-button-close @click="saveCustomFilter = false" />
+        <div class="form-label mt-0">
+          Choose the name for your custom filter
+        </div>
+        <v-text-field
+          v-model="customFilterName"
+          outlined
+          label="Filter name"
+          class="text-field mt-4"
+          reqired
+          counter="25"
+        />
+        <v-row-container class="mt-auto">
+          <v-btn
+            text
+            color="error"
+            class="filter_btn ml-4"
+            width="100"
+            height="53"
+            @click="saveCustomFilter = false"
+          >
+            Close
+          </v-btn>
+          <v-btn
+            depressed
+            :disabled="customFilterName === ''"
+            color="primary"
+            class="ml-auto filter_btn"
+            width="180"
+            height="53"
+            @click="saveCustomFilter = false"
+          >
+            Save
+          </v-btn>
+        </v-row-container>
+      </v-card>
+    </v-dialog>
+    <v-dialog
+      v-model="openCustomFilters"
+      max-width="500"
+      transition="dialog-bottom-transition"
+      persistent
+    >
+      <v-card
+        width="500"
+        height="450"
+        elevation="0"
+        class="card d-flex flex-column"
+      >
+        <v-modal-button-close @click="openCustomFilters = false" />
+        <filter-list-item
+          :custom-filters-list="customFiltersList"
+          @click="this.openCustomFilters = false"
+        />
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import BaseMultiSelect from "@/components/VMultiSelect.vue";
 import VModalButtonClose from "@/components/VModalButtonClose.vue";
+import FilterListItem from "@/components/FilterListItem.vue";
 
 import { mapMutations, mapState } from "vuex";
 
@@ -165,11 +246,53 @@ export default {
   components: {
     BaseMultiSelect,
     VModalButtonClose,
+    FilterListItem,
   },
   data() {
     return {
       countries: "choose",
       networks: "choose",
+      saveCustomFilter: false,
+      openCustomFilters: false,
+      customFilterName: "",
+      customFiltersList: [
+        {
+          name: "Europe Android",
+          presets: "44 countries, Android",
+        },
+        {
+          name: "Europe iOS",
+          presets: "44 countries, iOS",
+        },
+        {
+          name: "NoBanner USA Android",
+          presets: "USA, Intertitial, Rewarded, Android",
+        },
+        {
+          name: "NoBanner USA iOS",
+          presets: "USA, Intertitial, Rewarded, iOS",
+        },
+        {
+          name: "Benelux Vungle",
+          presets: "Belgium, Netherlands, Luxembourg, Vungle",
+        },
+        {
+          name: "Europe iOS",
+          presets: "44 countries, iOS",
+        },
+        {
+          name: "NoBanner USA Android",
+          presets: "USA, Intertitial, Rewarded, Android",
+        },
+        {
+          name: "NoBanner USA iOS",
+          presets: "USA, Intertitial, Rewarded, iOS",
+        },
+        {
+          name: "Benelux Vungle",
+          presets: "Belgium, Netherlands, Luxembourg, Vungle",
+        },
+      ],
     };
   },
   methods: {

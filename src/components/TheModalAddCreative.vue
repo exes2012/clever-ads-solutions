@@ -235,17 +235,14 @@
         <div class="stepper_label mb-0">Addition options</div>
         <v-checkbox
           v-if="orientation !== 'All orientation'"
-          v-model="policyChecked"
           class="stepper_checkbox mt-0"
           label="Do not show if the device is in an unsupported orientation"
         />
         <v-checkbox
-          v-model="policyChecked"
           class="stepper_checkbox mt-0"
           label="Do not show video background"
         />
         <v-checkbox
-          v-model="policyChecked"
           class="stepper_checkbox mt-0"
           label="Do not show detailed information about the application"
         />

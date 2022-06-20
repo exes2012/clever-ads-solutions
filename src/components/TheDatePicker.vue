@@ -29,6 +29,7 @@
 
 <script>
 import Litepicker from "litepicker";
+import { mapMutations } from "vuex";
 export default {
   name: "TheDatePicker",
   data() {
@@ -38,17 +39,20 @@ export default {
       startDate: null,
       endDate: null,
       rangeIsPicked: false,
+      columns: 1,
     };
   },
 
   mounted() {
+    this.updateColumns();
+
     const picker = new Litepicker({
       element: document.getElementById("litepicker"),
       inlineMode: true,
       singleMode: false,
       splitView: false,
-      numberOfMonths: 2,
-      numberOfColumns: 2,
+      numberOfMonths: this.columns,
+      numberOfColumns: this.columns,
       setup: (picker) => {
         picker.on("preselect", (date1, date2) => {
           this.rangeIsPicked = false;
@@ -65,7 +69,20 @@ export default {
 
     this.datePicker = picker;
   },
+  created() {
+    window.addEventListener("resize", this.updateColumns);
+  },
   methods: {
+    ...mapMutations("filters", ["closeDatepickerModal"]),
+    updateColumns() {
+      if (window.innerWidth < 768) {
+        this.columns = 1;
+      }
+
+      if (window.innerWidth >= 768) {
+        this.columns = 2;
+      }
+    },
     clearSelection() {
       this.datePicker.clearSelection();
       this.startDate = null;
@@ -80,6 +97,7 @@ export default {
       this.startDate = null;
       this.endDate = null;
       this.rangeIsPicked = false;
+      this.closeDatepickerModal();
       console.log(this.dateRange);
     },
   },

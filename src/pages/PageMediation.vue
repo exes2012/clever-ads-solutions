@@ -18,6 +18,7 @@
       :table-data="this.$store.state.applications.appList"
     />
     <the-modal-chart-custom-date />
+    <the-modal-compare-custom-date />
   </div>
 </template>
 <script>
@@ -25,6 +26,7 @@ import TheIndicatorsBar from "@/components/TheIndicatorsBar.vue";
 import TheMediationChart from "@/components/TheMediationChart.vue";
 import BaseTable from "@/components/BaseTable";
 import TheModalChartCustomDate from "@/components/TheModalChartCustomDate.vue";
+import TheModalCompareCustomDate from "@/components/TheModalCompareCustomDate.vue";
 import ScrollTable from "@/components/ScrollTable.vue";
 import PrimeTable from "@/components/PrimeTable.vue";
 import { format, subDays } from "date-fns";
@@ -38,6 +40,7 @@ export default {
     TheIndicatorsBar,
     TheMediationChart,
     TheModalChartCustomDate,
+    TheModalCompareCustomDate,
     BaseTable,
     ScrollTable,
     PrimeTable,

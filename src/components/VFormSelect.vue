@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="select-box">
-      <div class="options-container" v-if="selectActive">
+      <div class="options-container" v-show="selectActive">
         <div
           class="option"
           v-for="option in options"
@@ -119,10 +119,11 @@ export default {
   background: #f1f7ff;
 }
 
-.select-box .options-container + .selected::after {
-  transform: rotateX(180deg);
-  top: 17px;
-}
+/*.select-box .options-container + .selected::after {*/
+/*  transform: rotateX(180deg);*/
+/*  top: 17px;*/
+/*}*/
+
 .selected {
   display: flex;
   font-size: 14px;

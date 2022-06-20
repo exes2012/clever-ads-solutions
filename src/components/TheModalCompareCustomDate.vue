@@ -1,26 +1,26 @@
 <template>
   <v-dialog
-    v-model="this.$store.state.filters.isDatepickerModalOpen"
+    v-model="this.$store.state.filters.isCompareDatepickerModalOpen"
     max-width="774"
     transition="dialog-bottom-transition"
     persistent
   >
     <v-card elevation="0" class="card" width="774">
-      <v-modal-button-close @click="closeDatepickerModal" />
-      <v-form-label label="Date range" class="mx-auto datepicker" />
-      <the-date-picker />
+      <v-modal-button-close @click="closeCompareDatepickerModal" />
+      <div class="label">Select two periods with the same number of days</div>
+      <the-date-compare />
     </v-card>
   </v-dialog>
 </template>
 
 <script>
-import TheDatePicker from "@/components/TheDatePicker.vue";
+import TheDateCompare from "@/components/TheDateCompare.vue";
 import { mapMutations } from "vuex";
 
 export default {
   name: "BaseTableModalAdmobId",
   components: {
-    TheDatePicker,
+    TheDateCompare,
   },
   props: {
     admobAppId: {
@@ -28,7 +28,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations("filters", ["closeDatepickerModal"]),
+    ...mapMutations("filters", ["closeCompareDatepickerModal"]),
   },
 };
 </script>
@@ -67,13 +67,24 @@ export default {
   padding-right: 9px;
 }
 
+.label {
+  font-size: 24px;
+  font-weight: 500;
+}
+
 @media screen and (max-width: 768px) {
   .card {
-    padding: 30px;
+    padding: 20px;
   }
 
   .datepicker {
     font-size: 30px;
+  }
+
+  .label {
+    font-size: 18px;
+    line-height: 110%;
+    font-weight: 500;
   }
 }
 </style>

@@ -39,7 +39,6 @@
         :options-width="'140px'"
       />
       <the-compare-selector
-        v-if="barState === 'normal'"
         :options="optionsCompare"
         @select="compareSelect"
         :selected="selectedCompare"
@@ -188,15 +187,16 @@ export default {
 
 @media screen and (max-width: 1280px) {
   .chart-bar {
+    width: 100%;
     -ms-overflow-style: none;
     align-items: start;
     margin: 0;
     padding: 10px 0;
     border-top: 2px solid #efefef;
     border-bottom: 2px solid #efefef;
-    max-height: 57px;
-    overflow-x: scroll;
-    overflow-y: visible;
+    max-height: 97px;
+    overflow-x: auto;
+    overflow-y: hidden;
     &::-webkit-scrollbar {
       display: none;
     }

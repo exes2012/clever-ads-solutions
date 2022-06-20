@@ -7,12 +7,20 @@
     </div>
     <div class="legend">
       <div class="legend_border"></div>
+      <v-row-container class="justify-center">
+        <v-btn
+          color="primary"
+          width="111"
+          height="36"
+          @click="resetLegendItems(myChart)"
+          class="legend_reset"
+          v-if="isLegendItemHide === true"
+        >
+          <base-icon name="clarityEyeWhite" class="mr-2 mt-1" />Show all</v-btn
+        >
+      </v-row-container>
       <div id="legend" class="legend_item">
         <ul class="legend_list" v-if="showChart">
-          <li class="legend_list-item" @click="resetLegendItems(myChart)">
-            <base-icon class="legend_list-icon" name="clarityEyeClosed" />
-            <div class="legend_item-text disable">Show all</div>
-          </li>
           <li
             class="legend_list-item"
             v-for="legendItem in this.legendItems"
@@ -122,6 +130,7 @@ export default {
       legendItems: null,
       disabledId: null,
       isActive: true,
+      isLegendItemHide: null,
     };
   },
   mounted() {
@@ -246,6 +255,7 @@ export default {
       // hide tooltip if mouseout
       if (tooltip.opacity === 0) {
         tooltipEL.style.opacity = 0;
+        return;
       }
 
       if (tooltip.body) {
@@ -318,7 +328,7 @@ export default {
             tooltipEL.style.left = positionX + tooltip.caretX + 20 + "px";
             tooltipEL.style.top = positionY + tooltip.caretY - 150 + "px";
           } else {
-            tooltipEL.style.left = positionX + tooltip.caretX - 100 + "px";
+            tooltipEL.style.left = positionX + tooltip.caretX + "px";
             tooltipEL.style.top = positionY / 2 + tooltip.caretY + "px";
           }
         }
@@ -451,6 +461,7 @@ export default {
         },
       },
     });
+
     this.myChart = myChart;
 
     function generateLegend() {
@@ -496,11 +507,28 @@ export default {
       myChart.update();
 
       this.disabledId = null;
+      this.isLegendItemHide = false;
     },
     toggleLegendItem(legendItem, myChart) {
       const isHidden = !myChart.isDatasetVisible(legendItem.datasetIndex);
       myChart.setDatasetVisibility(legendItem.datasetIndex, isHidden);
       myChart.update();
+
+      let arr = myChart.legend.legendItems;
+      let disabledItems = 0;
+
+      function filterDisabledItems(item) {
+        if (item.hidden === true) {
+          disabledItems++;
+        }
+      }
+
+      let filteredItems = arr.filter(filterDisabledItems);
+      if (disabledItems > 0) {
+        this.isLegendItemHide = true;
+      } else {
+        this.isLegendItemHide = false;
+      }
     },
   },
 };
@@ -509,7 +537,7 @@ export default {
 <style lang="scss">
 .chart {
   height: 422px;
-  padding: 0 20px;
+  padding: 40px 50px;
 }
 
 .tooltipDesign {
@@ -551,6 +579,12 @@ export default {
 .legend {
   display: flex;
   flex-direction: column;
+  position: relative;
+  &_reset {
+    position: absolute;
+    margin: 0 auto;
+    top: -18px;
+  }
   &_border {
     display: flex;
     margin: 0 35px;
@@ -592,16 +626,19 @@ export default {
 
 @media screen and (max-width: 768px) {
   .chart {
-    padding: 0;
+    padding: 0 0 20px 0;
     &_container {
       overflow-x: hidden;
     }
   }
   .legend {
+    &_reset {
+      top: -8px;
+    }
     &_item {
       display: flex;
       padding: 0;
-      margin: 10px;
+      margin: 20px 10px;
     }
     &_border {
       margin: 10px 0 0 0;
@@ -618,36 +655,36 @@ export default {
   }
 
   .toggleLeft {
-    transition: all 1s ease-out;
+    transition: width 1s ease-out;
     width: 110%;
     float: right;
   }
   .toggleRight {
     width: 110%;
     float: left;
-    transition: all 1s ease-out;
+    transition: width 1s ease-out;
   }
   .toggleAll {
     width: 120%;
     margin-left: -10%;
-    transition: all 1s ease-out;
+    transition: width 1s ease-out;
   }
   .untoggleAll {
     width: 100%;
     margin: 0;
-    transition: all 1s ease-out;
+    transition: width 1s ease-out;
   }
   .untoggleLeft {
     width: 100%;
     margin: 0;
     float: right;
-    transition: all 1s ease-out;
+    transition: width 1s ease-out;
   }
   .untoggleRight {
     width: 100%;
     margin: 0;
     float: left;
-    transition: all 1s ease-out;
+    transition: width 1s ease-out;
   }
 }
 </style>

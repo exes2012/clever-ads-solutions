@@ -55,5 +55,6 @@ export default {
 <style lang="scss">
 .application {
   width: 100%;
+  overflow: hidden;
 }
 </style>

@@ -28,6 +28,7 @@ export default {
   .the-container {
     max-width: 640px;
     padding: 0;
+    overflow: hidden;
   }
 }
 </style>

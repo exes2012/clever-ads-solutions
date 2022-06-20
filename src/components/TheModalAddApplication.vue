@@ -254,6 +254,7 @@ export default {
   data() {
     return {
       e1: 1,
+      appStore: null,
       appName: null,
       appId: "",
       policyChecked: false,

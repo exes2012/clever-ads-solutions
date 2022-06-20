@@ -53,18 +53,11 @@ export default {
     ],
     paymentsTableColumns: [
       {
-        field: "year",
-        header: "Year",
+        field: "period",
+        header: "Period",
         sortable: false,
         style: { minWidth: "105px" },
         frozen: true,
-      },
-      {
-        field: "month",
-        header: "Month",
-        sortable: false,
-        style: { width: "110px" },
-        frozen: false,
       },
       {
         field: "accuralSum",
@@ -98,7 +91,7 @@ export default {
         field: "comment",
         header: "Comment",
         sortable: false,
-        style: { width: "350px" },
+        style: { width: "400px" },
         frozen: false,
       },
     ],
@@ -107,7 +100,7 @@ export default {
         field: "appName",
         header: "App",
         sortable: false,
-        style: { minWidth: "216px" },
+        style: { minWidth: "226px" },
         frozen: true,
       },
       {
@@ -121,7 +114,7 @@ export default {
         field: "orientation",
         header: "Orientation",
         sortable: false,
-        style: { width: "132px" },
+        style: { width: "152px" },
         frozen: false,
       },
       {
@@ -163,7 +156,7 @@ export default {
         field: "crossPromo",
         header: "Cross promo",
         sortable: false,
-        style: { width: "190px" },
+        style: { width: "160px" },
         frozen: false,
       },
       {

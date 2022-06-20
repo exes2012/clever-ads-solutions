@@ -397,3 +397,15 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .litepicker .container__months .month-item {
+    padding: 0;
+  }
+
+  .litepicker .container__months {
+    border:none;
+    box-shadow: none;
+    width: 100%;
+  }
+}
