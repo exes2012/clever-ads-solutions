@@ -6,80 +6,83 @@
     transition="dialog-bottom-transition"
     class="dialog"
   >
-    <v-card width="774" elevation="0" class="card">
-      <v-modal-button-close @click="closePaymentDetails" />
-      <v-form-label label="Payment details" class="mb-4 mt-0" />
-      <v-text-field
-        v-model="appName"
-        :rules="[rules.iban]"
-        outlined
-        label="IBAN"
-        class="text-field"
-        reqired
-        counter="50"
-      />
-      <v-row-container class="mobile-row">
+    <form @submit.prevent="savePaymentDetails">
+      <v-card width="774" elevation="0" class="card">
+        <v-modal-button-close @click="closePaymentDetails" />
+        <v-form-label label="Payment details" class="mb-4 mt-0" />
         <v-text-field
-          v-model="appName"
-          :rules="[rules.required]"
+          v-model="paymentDetails.iban"
+          :rules="[rules.iban]"
           outlined
-          label="Holder's Name"
-          class="text-field pr-3 mobile-row_field"
+          label="IBAN"
+          class="text-field"
           reqired
-          counter="16"
-          hint="Enter valid phone number"
+          counter="50"
         />
-        <v-text-field
-          v-model="appName"
-          :rules="[rules.required]"
-          outlined
-          label="SWIFT"
-          class="text-field pl-3 mobile-row_field"
-          counter="25"
-          reqired
-        />
-      </v-row-container>
-      <v-row-container class="mobile-row">
-        <v-col-container>
-          <v-form-select
-            :options="this.$store.state.countries.countriesList"
-            @select="countrySelect"
-            :selected="selectedCountry"
-            placeholder="Bank Country"
-            class="pr-3 mobile-row_field"
+        <v-row-container class="mobile-row">
+          <v-text-field
+            v-model="paymentDetails.holdersName"
+            :rules="[rules.required]"
+            outlined
+            label="Holder's Name"
+            class="text-field pr-3 mobile-row_field"
+            reqired
+            counter="16"
+            hint="Enter valid phone number"
           />
-        </v-col-container>
-        <v-col-container>
-          <v-form-select
-            :options="this.$store.state.currencies.currenciesList"
-            @select="currencySelect"
-            :selected="selectedCurrency"
-            placeholder="Currency"
-            class="pl-3 mobile-row_field mt-s"
+          <v-text-field
+            v-model="paymentDetails.swift"
+            :rules="[rules.required]"
+            outlined
+            label="SWIFT"
+            class="text-field pl-3 mobile-row_field"
+            counter="25"
+            reqired
           />
-        </v-col-container>
-      </v-row-container>
-      <v-row-container class="justify-end mt-8">
-        <v-btn
-          text
-          color="error"
-          class=""
-          width="100"
-          height="53"
-          @click="closePaymentDetails"
-          >Cancel</v-btn
-        >
-        <v-btn
-          depressed
-          color="primary"
-          class="ml-4"
-          width="180"
-          height="53"
-          @click="closePaymentDetails"
-          >Save changes</v-btn
-        >
-      </v-row-container>
-    </v-card>
+        </v-row-container>
+        <v-row-container class="mobile-row">
+          <v-col-container>
+            <v-form-select
+              :options="this.$store.state.countries.countriesList"
+              @select="countrySelect"
+              :selected="paymentDetails.selectedCountry"
+              placeholder="Bank Country"
+              class="pr-3 mobile-row_field"
+            />
+          </v-col-container>
+          <v-col-container>
+            <v-form-select
+              :options="this.$store.state.currencies.currenciesList"
+              @select="currencySelect"
+              :selected="paymentDetails.selectedCurrency"
+              placeholder="Currency"
+              class="pl-3 mobile-row_field mt-s"
+            />
+          </v-col-container>
+        </v-row-container>
+        <v-row-container class="justify-end mt-8">
+          <v-btn
+            text
+            color="error"
+            class=""
+            width="100"
+            height="53"
+            @click="closePaymentDetails"
+            >Cancel</v-btn
+          >
+          <v-btn
+            type="submit"
+            depressed
+            color="primary"
+            class="ml-4"
+            width="180"
+            height="53"
+            @submit="savePaymentDetails"
+            >Save changes</v-btn
+          >
+        </v-row-container>
+      </v-card>
+    </form>
   </v-dialog>
 </template>
 
@@ -89,6 +92,7 @@ import VModalButtonClose from "@/components/VModalButtonClose.vue";
 import VFormLabel from "@/components/VFormLabel.vue";
 import VDividerHorizontal from "@/components/VDividerHorizontal.vue";
 import VFormSelect from "@/components/VFormSelect.vue";
+import axios from "axios";
 
 export default {
   name: "TheModalPersonalData",
@@ -100,8 +104,13 @@ export default {
   },
   data() {
     return {
-      selectedCountry: "",
-      selectedCurrency: "",
+      paymentDetails: {
+        iban: "",
+        holdersName: "",
+        swift: "",
+        selectedCountry: null,
+        selectedCurrency: null,
+      },
       rules: {
         required: (value) => !!value || "Required.",
         iban: (value) => {
@@ -123,6 +132,10 @@ export default {
     },
     currencySelect(option) {
       this.selectedCurrency = option;
+    },
+    savePaymentDetails() {
+      axios.post("http://", this.paymentDetails).then(function (response) {});
+      this.closePaymentDetails();
     },
   },
 };

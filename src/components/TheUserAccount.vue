@@ -2,7 +2,7 @@
   <div>
     <div class="user" @click="openUserAccountDropdown">
       <the-user-account-avatar />
-      <div class="user_name">Dart Weider</div>
+      <div class="user_name">{{ this.$store.state.userAccount.userName }}</div>
       <the-user-account-dropdown
         v-if="this.$store.state.userAccount.userAccountDropdownVisible"
       />
