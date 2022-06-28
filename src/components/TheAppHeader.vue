@@ -94,7 +94,7 @@ export default {
   position: fixed;
   top: 0;
   background: white;
-  z-index: 10;
+  z-index: 20;
   &_container {
     align-items: center;
     width: 100%;

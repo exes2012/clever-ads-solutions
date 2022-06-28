@@ -4,21 +4,21 @@
       <v-btn
         class="chart-bar_btn"
         text
-        @click="getYesterday"
+        @click="getDateRange(1, 1)"
         :class="{ active: activeButtonId === 1 }"
         >Yesterday</v-btn
       >
       <v-btn
         class="chart-bar_btn"
         text
-        @click="getSevenDays"
+        @click="getDateRange(2, 6)"
         :class="{ active: activeButtonId === 2 }"
         >7 days</v-btn
       >
       <v-btn
         class="chart-bar_btn"
         text
-        @click="getThirtyDays"
+        @click="getDateRange(3, 29)"
         :class="{ active: activeButtonId === 3 }"
         >30 days</v-btn
       >
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { format, formatDistance, subDays } from "date-fns";
 import BaseSelector from "@/components/BaseSelector.vue";
 import TheMediationChartFilter from "@/components/TheMediationChartFilter.vue";
 import TheMediationChartFilterModal from "@/components/TheModalMediationChartFilter.vue";
@@ -69,6 +70,9 @@ export default {
   },
   data() {
     return {
+      dateRange: [],
+      today: null,
+      daysAgo: null,
       barState: null,
       selectedViewBy: {
         name: "Default",
@@ -122,21 +126,26 @@ export default {
     };
   },
   methods: {
-    ...mapMutations("filters", ["openFilterModal", "openDatepickerModal"]),
+    ...mapMutations("filters", [
+      "openFilterModal",
+      "openDatepickerModal",
+      "updateSelectedDateRange",
+    ]),
     viewBySelect(option) {
       this.selectedViewBy = option;
     },
     compareSelect(option) {
       this.selectedCompare = option;
     },
-    getYesterday() {
-      this.activeButtonId = 1;
-    },
-    getSevenDays() {
-      this.activeButtonId = 2;
-    },
-    getThirtyDays() {
-      this.activeButtonId = 3;
+    getDateRange(activeId, days) {
+      this.dateRange = [];
+      this.activeButtonId = activeId;
+      this.daysAgo = format(subDays(new Date(), days), "yyyy-MM-dd");
+      this.dateRange.push(this.daysAgo);
+      this.today = format(new Date(), "yyyy-MM-dd");
+      this.dateRange.push(this.today);
+      console.log(this.dateRange);
+      this.updateSelectedDateRange(this.dateRange);
     },
     getCustomDateRange() {
       this.activeButtonId = 4;
@@ -151,7 +160,7 @@ export default {
     },
   },
   mounted() {
-    this.getSevenDays();
+    this.getDateRange(2, 7);
     this.updateBarState();
   },
   created() {

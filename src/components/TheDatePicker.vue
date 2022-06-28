@@ -73,7 +73,10 @@ export default {
     window.addEventListener("resize", this.updateColumns);
   },
   methods: {
-    ...mapMutations("filters", ["closeDatepickerModal"]),
+    ...mapMutations("filters", [
+      "closeDatepickerModal",
+      "updateSelectedDateRange",
+    ]),
     updateColumns() {
       if (window.innerWidth < 768) {
         this.columns = 1;
@@ -99,9 +102,9 @@ export default {
       this.rangeIsPicked = false;
       this.closeDatepickerModal();
       console.log(this.dateRange);
+      this.updateSelectedDateRange(this.dateRange);
     },
   },
-  watch: {},
 };
 </script>
 
