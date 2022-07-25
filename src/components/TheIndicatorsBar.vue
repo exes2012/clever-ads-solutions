@@ -12,7 +12,7 @@
     >
       <v-card-text class="indicator-card_text">
         <div class="indicator-card_title">
-          {{ indicator.type }}
+          {{ indicator.label }}
           <v-tooltip bottom>
             <template v-slot:activator="{ on: tooltip }">
               <v-icon size="15.75" color="#BCBCBC" v-on="{ ...tooltip }"
@@ -38,20 +38,23 @@ export default {
       selectedId: 0,
       indicators: [
         {
-          type: "Est. Revenue",
+          label:"Est. Revenue",
+          type: "revenue",
           currency: "$",
           value: 157235.13,
           color: { color: "#0DC100" },
           info: "",
         },
         {
-          type: "Impressions",
+          label:"Impressions",
+          type: "impressions",
           value: 351342,
           color: { color: "#0074FF" },
           info: "",
         },
         {
-          type: "eCPM",
+          label:"eCPM",
+          type: "ecpm",
           currency: "$",
           value: 0.13,
           color: { color: "#EC0000" },
@@ -63,7 +66,7 @@ export default {
   methods: {
     selectIndicator(indicator, id) {
       this.selectedId = id;
-      console.log(indicator.type);
+      this.$store.commit('chartdata/SELECT_INDICATOR_TYPE',indicator.type)
     },
   },
 };

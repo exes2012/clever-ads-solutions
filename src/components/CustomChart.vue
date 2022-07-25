@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-btn color=primary @click="getChartData(myChart)">Фетч</v-btn>
     <div class="chart_container">
       <div class="chart" :class="toggleClass">
         <canvas id="myChart"></canvas>
@@ -108,6 +109,8 @@ Chart.register(
   SubTitle
 );
 import { mapMutations } from "vuex";
+import EventService from "@/services/EventService";
+
 export default {
   name: "CustomChart",
   components: {},
@@ -126,14 +129,23 @@ export default {
   },
   data() {
     return {
+      revenue:null,
       myChart: null,
       legendItems: null,
       disabledId: null,
       isActive: true,
       isLegendItemHide: null,
+      dataPoints:null,
+      priorInterval:["01.02", "02.02", "03.02", "04.02", "05.02", "06.02"],
+      lastInterval:null,
+      isCompareActive:false,
+      chartDates:null,
+      chartData:null,
     };
   },
   mounted() {
+    this.fetchChartData()
+
     let mobileSize = false;
     let barBorderRadius = 8;
     let barBorderThick = 2;
@@ -338,7 +350,7 @@ export default {
     const myChart = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: ["01.02", "02.02", "03.02", "04.02", "05.02", "06.02"],
+        labels: this.priorInterval,
         datasets: [
           {
             label: "Active users",
@@ -374,7 +386,7 @@ export default {
             radius: 1,
           },
           {
-            label: "iOS",
+            label: "iкOS",
             type: "line",
             tension: 0.3,
             data: [9, 32, 12, 2, 12, 23],
@@ -496,6 +508,37 @@ export default {
   },
   methods: {
     ...mapMutations("filters", ["toggleLegendItemActive"]),
+    fetchChartData() {
+      EventService.getData()
+        .then((response) => {
+          this.chartData = response.data
+
+        }).catch(error =>{
+          console.log(error)
+      })
+    },
+
+    addZero(num){
+      if (num >= 0 && num <= 9) {
+        return '0' + num;
+      } else {
+        return num;
+      }
+    },
+
+    formatDate(str){
+      let date = new Date(str)
+      return this.addZero(date.getDate())+'.'+ this.addZero(date.getMonth()+1)
+    },
+
+    getChartData(myChart){
+      this.fetchChartData()
+      this.isCompareActive = this.chartData.compare
+      this.priorInterval = this.chartData.dates.map(this.formatDate)
+      myChart.config.data.labels = this.priorInterval
+      myChart.update()
+    },
+
     showChart(myChart) {
       this.myChart = myChart;
       this.legendItems = myChart.legend.legendItems;
@@ -505,7 +548,6 @@ export default {
         myChart.setDatasetVisibility(legendItem.datasetIndex, true);
       });
       myChart.update();
-
       this.disabledId = null;
       this.isLegendItemHide = false;
     },
