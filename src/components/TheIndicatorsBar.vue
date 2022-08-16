@@ -38,7 +38,7 @@ export default {
       selectedId: 0,
       indicators: [
         {
-          label:"Est. Revenue",
+          label: "Est. Revenue",
           type: "revenue",
           currency: "$",
           value: 157235.13,
@@ -46,14 +46,14 @@ export default {
           info: "",
         },
         {
-          label:"Impressions",
-          type: "impressions",
+          label: "Impressions",
+          type: "impression",
           value: 351342,
           color: { color: "#0074FF" },
           info: "",
         },
         {
-          label:"eCPM",
+          label: "eCPM",
           type: "ecpm",
           currency: "$",
           value: 0.13,
@@ -66,7 +66,7 @@ export default {
   methods: {
     selectIndicator(indicator, id) {
       this.selectedId = id;
-      this.$store.commit('chartdata/SELECT_INDICATOR_TYPE',indicator.type)
+      this.$store.commit("chartdata/SELECT_INDICATOR_TYPE", indicator.type);
     },
   },
 };

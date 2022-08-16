@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-btn color=primary @click="getChartData(myChart)">Фетч</v-btn>
     <div class="chart_container">
       <div class="chart" :class="toggleClass">
         <canvas id="myChart"></canvas>
@@ -21,7 +20,7 @@
         >
       </v-row-container>
       <div id="legend" class="legend_item">
-        <ul class="legend_list" v-if="showChart">
+        <ul class="legend_list">
           <li
             class="legend_list-item"
             v-for="legendItem in this.legendItems"
@@ -129,22 +128,39 @@ export default {
   },
   data() {
     return {
-      revenue:null,
       myChart: null,
       legendItems: null,
       disabledId: null,
       isActive: true,
       isLegendItemHide: null,
-      dataPoints:null,
-      priorInterval:["01.02", "02.02", "03.02", "04.02", "05.02", "06.02"],
-      lastInterval:null,
-      isCompareActive:false,
-      chartDates:null,
-      chartData:null,
+      dataSets: [],
+      priorInterval: null,
+      lastInterval: null,
+      isCompareActive: false,
+      currency: "",
+      type: this.$store.state.chartdata.indicator,
     };
   },
+
+  computed: {
+    getIndicatorState() {
+      return this.$store.state.chartdata.indicator;
+    },
+    loadChartData() {
+      return this.$store.state.chartdata.chartData;
+    },
+  },
+  watch: {
+    getIndicatorState(newState, oldState) {
+      this.generateChartData(this.myChart);
+    },
+    loadChartData() {
+      this.currency = this.$store.state.chartdata.chartData.currency;
+      this.generateChartData(this.myChart);
+    },
+  },
   mounted() {
-    this.fetchChartData()
+    let currency = "";
 
     let mobileSize = false;
     let barBorderRadius = 8;
@@ -351,60 +367,7 @@ export default {
       type: "bar",
       data: {
         labels: this.priorInterval,
-        datasets: [
-          {
-            label: "Active users",
-            type: "bar",
-            data: [108, 19, 295, 113, 211, 12],
-            backgroundColor: ["rgba(244, 244, 244, 0.5)"],
-            borderColor: ["#DFDFDF"],
-            borderWidth: barBorderThick,
-            borderRadius: barBorderRadius,
-            borderSkipped: false,
-            barPercentage: barPercentage,
-            order: 2,
-            yAxisID: "y1",
-          },
-          {
-            label: "Android",
-            type: "line",
-            tension: 0.3,
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: ["transparent"],
-            borderColor: ["#0DC100"],
-            borderWidth: lineThick,
-            yAxisID: "y",
-            pointStyle: "Rounded",
-            pointBorderWidth: 1,
-            pointBorderColor: "#0DC100",
-            pointBackgroundColor: "#0DC100",
-            pointHoverBorderColor: "#0DC100",
-            pointHoverWidth: 50,
-            pointHoverBackgroundColor: "white",
-            pointHoverBorderWidth: 3,
-            pointHoverRadius: circleRoundRadius,
-            radius: 1,
-          },
-          {
-            label: "iкOS",
-            type: "line",
-            tension: 0.3,
-            data: [9, 32, 12, 2, 12, 23],
-            backgroundColor: ["transparent"],
-            borderColor: ["#EC0000"],
-            borderWidth: lineThick,
-            pointBorderWidth: 1,
-            yAxisID: "y",
-            pointBorderColor: "#EC0000",
-            pointBackgroundColor: "#EC0000",
-            pointHoverWidth: 50,
-            pointHoverBackgroundColor: "white",
-            pointHoverBorderWidth: 3,
-            pointHoverRadius: circleRoundRadius,
-            pointHoverBorderColor: "#EC0000",
-            radius: 0.5,
-          },
-        ],
+        datasets: [],
       },
       plugins: [tooltipLine],
       options: {
@@ -440,6 +403,9 @@ export default {
           },
           y: {
             ticks: {
+              callback: function (value, index, ticks) {
+                return currency + value;
+              },
               color: "#A3A3A3",
               font: {
                 weight: 400,
@@ -475,74 +441,160 @@ export default {
     });
 
     this.myChart = myChart;
-
-    function generateLegend() {
-      //get DOM location
-      const legend = document.querySelector(".legend");
-
-      //create legend
-      const legendItem = document.createElement("DIV");
-      legendItem.setAttribute("class", "legend_item");
-      // create legendList
-      const legendList = document.createElement("UL");
-      legendList.setAttribute("class", "legend_list");
-
-      //create legend listItem
-      myChart.legend.legendItems.forEach((dataset, index) => {
-        const text = dataset.text;
-        const datasetIndex = dataset.datasetIndex;
-        const bgColor = dataset.fillStyle;
-        const bColor = dataset.strokeStyle;
-        const fontColor = dataset.fontColor;
-
-        const legendListItem = document.createElement("LI");
-        legendListItem.setAttribute("class", "legend_list-item");
-      });
-
-      //insert legend
-      legend.appendChild(legendItem);
-    }
-
-    generateLegend();
-    this.showChart(myChart);
+    this.fetchFromStore();
+    currency = this.$store.state.chartdata.chartData.currency;
+    myChart.update();
   },
   methods: {
     ...mapMutations("filters", ["toggleLegendItemActive"]),
-    fetchChartData() {
-      EventService.getData()
-        .then((response) => {
-          this.chartData = response.data
 
-        }).catch(error =>{
-          console.log(error)
-      })
+    fetchFromStore() {
+      this.$store.dispatch("chartdata/FETCH_CHART_DATA");
     },
 
-    addZero(num){
+    addZero(num) {
       if (num >= 0 && num <= 9) {
-        return '0' + num;
+        return "0" + num;
       } else {
         return num;
       }
     },
 
-    formatDate(str){
-      let date = new Date(str)
-      return this.addZero(date.getDate())+'.'+ this.addZero(date.getMonth()+1)
+    formatDate(str) {
+      let date = new Date(str);
+      return (
+        this.addZero(date.getDate()) + "." + this.addZero(date.getMonth() + 1)
+      );
     },
 
-    getChartData(myChart){
-      this.fetchChartData()
-      this.isCompareActive = this.chartData.compare
-      this.priorInterval = this.chartData.dates.map(this.formatDate)
-      myChart.config.data.labels = this.priorInterval
-      myChart.update()
-    },
+    generateChartData(myChart) {
+      let chartData = this.$store.state.chartdata.chartData;
+      let dauArray = [];
 
-    showChart(myChart) {
-      this.myChart = myChart;
+      this.currency = chartData.currency;
+
+      this.dataSets = [];
+      this.isCompareActive = chartData.compare;
+      this.priorInterval = chartData.priorDates.map(this.formatDate);
+
+      if (this.isCompareActive === true) {
+        for (let key in chartData.priorInterval) {
+          let dauPerLine = chartData.priorInterval[key].dau;
+
+          let indicatorValue = this.$store.state.chartdata.indicator;
+          let lineColor =
+            "#" + Math.floor(Math.random() * 16777215).toString(16);
+
+          let linePrior = {
+            label: key + "(prior week)",
+            type: "line",
+            tension: 0.3,
+            data: chartData.priorInterval[key][indicatorValue],
+            backgroundColor: ["transparent"],
+            borderColor: [lineColor],
+            borderWidth: 3,
+            yAxisID: "y",
+            pointStyle: "Rounded",
+            pointBorderWidth: 1,
+            pointBorderColor: lineColor,
+            pointBackgroundColor: lineColor,
+            pointHoverBorderColor: lineColor,
+            pointHoverWidth: 50,
+            pointHoverBackgroundColor: "white",
+            pointHoverBorderWidth: 3,
+            pointHoverRadius: 10,
+            radius: 1,
+          };
+
+          let lineLast = {
+            label: key + "(last week)",
+            type: "line",
+            tension: 0.3,
+            data: chartData.lastInterval[key][indicatorValue],
+            backgroundColor: ["transparent"],
+            borderColor: [lineColor],
+            borderWidth: 3,
+            yAxisID: "y",
+            pointStyle: "Rounded",
+            pointBorderWidth: 1,
+            pointBorderColor: lineColor,
+            pointBackgroundColor: lineColor,
+            pointHoverBorderColor: lineColor,
+            pointHoverWidth: 50,
+            pointHoverBackgroundColor: "white",
+            pointHoverBorderWidth: 3,
+            pointHoverRadius: 10,
+            radius: 1,
+            borderDash: [5, 5],
+          };
+          this.dataSets.push(linePrior);
+          this.dataSets.push(lineLast);
+          dauArray.push(dauPerLine);
+        }
+      } else {
+        for (let key in chartData.priorInterval) {
+          let dauPerLine = chartData.priorInterval[key].dau;
+
+          let indicatorValue = this.$store.state.chartdata.indicator;
+          let lineColor =
+            "#" + Math.floor(Math.random() * 16777215).toString(16);
+
+          let lines = {
+            label: key,
+            type: "line",
+            tension: 0.3,
+            data: chartData.priorInterval[key][indicatorValue],
+            backgroundColor: ["transparent"],
+            borderColor: [lineColor],
+            borderWidth: 3,
+            yAxisID: "y",
+            pointStyle: "Rounded",
+            pointBorderWidth: 1,
+            pointBorderColor: lineColor,
+            pointBackgroundColor: lineColor,
+            pointHoverBorderColor: lineColor,
+            pointHoverWidth: 50,
+            pointHoverBackgroundColor: "white",
+            pointHoverBorderWidth: 3,
+            pointHoverRadius: 10,
+            radius: 1,
+          };
+          this.dataSets.push(lines);
+          dauArray.push(dauPerLine);
+        }
+      }
+
+      let dauResult = dauArray.reduce(function (r, a) {
+        a.forEach(function (b, i) {
+          r[i] = (r[i] || 0) + b;
+        });
+        return r;
+      });
+
+      let bar = {
+        label: "Active users",
+        type: "bar",
+        data: dauResult,
+        backgroundColor: ["rgba(244, 244, 244, 0.5)"],
+        borderColor: ["#DFDFDF"],
+        borderWidth: 2,
+        borderRadius: 8,
+        borderSkipped: false,
+        barPercentage: 0.3,
+        order: 2,
+        yAxisID: "y1",
+      };
+      this.dataSets.push(bar);
+
+      myChart.config.data.labels = this.priorInterval;
+      myChart.config.data.datasets = this.dataSets;
+
+      myChart.update();
       this.legendItems = myChart.legend.legendItems;
+
+      this.myChart = myChart;
     },
+
     resetLegendItems(myChart) {
       myChart.legend.legendItems.forEach((legendItem, index) => {
         myChart.setDatasetVisibility(legendItem.datasetIndex, true);
@@ -649,7 +701,8 @@ export default {
   &_list-item {
     display: flex;
     align-items: center;
-    margin-right: 130px;
+    width: 300px;
+    margin-right: 20px;
     cursor: pointer;
     height: 26px;
   }

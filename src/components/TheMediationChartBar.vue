@@ -75,12 +75,12 @@ export default {
       daysAgo: null,
       barState: null,
       selectedViewBy: {
-        name: "Default",
+        name: "Application",
         value: "1",
       },
       optionsViewBy: [
         {
-          name: "Default",
+          name: "Application",
           value: "1",
         },
         {
@@ -88,7 +88,7 @@ export default {
           value: "2",
         },
         {
-          name: "Application",
+          name: "Field",
           value: "3",
         },
         {

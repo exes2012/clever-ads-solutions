@@ -101,8 +101,8 @@ export default {
       this.endDate = null;
       this.rangeIsPicked = false;
       this.closeDatepickerModal();
-      console.log(this.dateRange);
       this.updateSelectedDateRange(this.dateRange);
+      console.log(this.$store.state.filters.selectedDateRange);
     },
   },
 };
