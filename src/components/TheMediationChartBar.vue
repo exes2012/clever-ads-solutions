@@ -39,10 +39,10 @@
         :options-width="'140px'"
       />
       <VColumnsMultiSelect
-        :options="this.$store.state.applications.appList"
-        display-property="appName"
+        :options="this.$store.state.tableColumns.mediationTableColumnsChose"
+        display-property="columnName"
         value-property="id"
-        v-model="selectedApps"
+        v-model="selectedColumns"
         :placeholder="'Columns'"/>
       <the-compare-selector
         :options="optionsCompare"
@@ -86,6 +86,7 @@ export default {
         name: "Application",
         value: "1",
       },
+      selectedColumns: [],
       columnsMultiSelect:[
         {
           name: "App"
@@ -170,6 +171,16 @@ export default {
       } else {
         this.barState = null;
       }
+    },
+  },
+  computed: {
+    selectedColumns: {
+      get() {
+        return this.$store.state.filters.selectedColumns;
+      },
+      set(value) {
+        this.$store.commit("filters/updateSelectedColumns", value);
+      },
     },
   },
   mounted() {

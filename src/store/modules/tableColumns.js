@@ -1,6 +1,36 @@
 export default {
   namespaced: true,
   state: {
+    mediationTableColumnsChose: [
+      {
+        id: 1,
+        columnName: "Application",
+      },
+      {
+        id: 2,
+        columnName: "AdSource",
+      },
+      {
+        id: 3,
+        columnName: "Format",
+      },
+      {
+        id: 4,
+        columnName: "Platform",
+      },
+      {
+        id: 5,
+        columnName: "Country",
+      },
+      {
+        id: 6,
+        columnName: "DAU",
+      },
+      {
+        id: 7,
+        columnName: "ARPU",
+      },
+    ],
     mediationTableColumns: [
       {
         field: "appName",

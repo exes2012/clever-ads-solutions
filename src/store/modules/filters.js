@@ -10,6 +10,7 @@ export default {
 
     //filtered items from filter form
     selectedCountries: [],
+    selectedColumns: [],
     selectedApps: [],
     selectedNetworks: [],
     selectedAdType: [],
@@ -23,6 +24,9 @@ export default {
     //filter modal window mutations
     updateSelectedCountries(state, list) {
       state.selectedCountries = list;
+    },
+    updateSelectedColumns(state, list) {
+      state.selectedColumns = list;
     },
     updateSelectedApps(state, list) {
       state.selectedApps = list;

@@ -8,25 +8,11 @@
     >
       <div
           class="multiselect_placeholder"
-          v-if="placeholderIsVisible"
       >{{ placeholder }}</div>
-      <div class="multiselect_selected"
-           v-for="(option,i) in formattedOptions"
-           :key="i"
-           v-show="option.checked"
-      >
-        {{option[displayProperty]}}
-        <span
-            class="multiselect_remove"
-            @click="preventClose($event);handleOptionClick(i)"
-        >&times;</span>
-      </div>
-
       <div
           class="multiselect_options"
           v-if="selectActive"
           @click="preventClose"
-          :style="{top:optionsTop}"
       >
         <div
             class="multiselect_option"
@@ -104,12 +90,6 @@ export default {
           }
       );
       const checkedOptions = fo.filter( option => option.checked ===true);
-      if(checkedOptions.length === 0) {
-        this.placeholderIsVisible = true;
-      }
-      else {
-        this.placeholderIsVisible = false;
-      }
       return fo;
     },
   }
@@ -123,7 +103,7 @@ export default {
   }
   .multiselect {
     background: #fff;
-    padding: 4px 35px;
+    padding: 4px 35px 4px 18px;
     margin: 8px 12px 8px 0;
     /*display: inline-block;*/
     border: 2px solid #efefef;
@@ -148,7 +128,7 @@ export default {
       height: 12px;
       width: 12px;
       right: 10px;
-      top:21px;
+      top:12px;
       transition: all 0.4s;
     }
     &_placeholder{
@@ -180,11 +160,11 @@ export default {
       box-shadow: 4px 4px 20px rgba(0, 8, 81, 0.1);
       order: 1;
       position: absolute;
-      top: 13px;
+      top: 34px;
       right: -2px;
       z-index: 10;
       padding: 16px 0;
-      width:200px;
+      width:300px;
     }
     &_option{
       display: flex;
