@@ -38,12 +38,12 @@
         :selected="selectedViewBy"
         :options-width="'140px'"
       />
-      <VColumnsMultiSelect
-        :options="this.$store.state.tableColumns.mediationTableColumnsChose"
-        display-property="columnName"
-        value-property="id"
-        v-model="selectedColumns"
-        :placeholder="'Columns'"/>
+      <ColumnSelector
+        :options="optionsViewBy"
+        @select="viewBySelect"
+        :selected="selectedViewBy"
+        :options-width="'300px'"
+      />
       <the-compare-selector
         :options="optionsCompare"
         @select="compareSelect"
@@ -66,10 +66,12 @@ import TheMediationChartFilterModal from "@/components/TheModalMediationChartFil
 import TheCompareSelector from "@/components/TheCompareSelector.vue";
 import { mapMutations } from "vuex";
 import VColumnsMultiSelect from "@/components/VColumnsMultiSelect";
+import ColumnSelector from "@/components/ColumnSelector.vue";
 
 export default {
   name: "TheMediationChartBar",
   components: {
+    ColumnSelector,
     VColumnsMultiSelect,
     BaseSelector,
     TheMediationChartFilter,
@@ -87,10 +89,10 @@ export default {
         value: "1",
       },
       selectedColumns: [],
-      columnsMultiSelect:[
+      columnsMultiSelect: [
         {
-          name: "App"
-        }
+          name: "App",
+        },
       ],
       optionsViewBy: [
         {
