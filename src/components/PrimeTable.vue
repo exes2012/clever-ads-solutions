@@ -31,6 +31,8 @@
       :selection.sync="selectedItem"
       :filters.sync="filters"
       :globalFilterFields="['appName']"
+      :lazy="true"
+      :loading="loading"
     >
       <template #loading> Loading data. Please wait. </template>
       <Column
@@ -211,6 +213,7 @@ export default {
       filters: {},
       source: null,
       tableScrollSize: null,
+      loading:false,
     };
   },
   methods: {
@@ -243,6 +246,7 @@ export default {
   mounted() {
     // this.forcedOriginScale("App");
     this.updateTableScrollSize();
+    this.loading=true;
   },
   created() {
     window.addEventListener("resize", this.updateTableScrollSize);

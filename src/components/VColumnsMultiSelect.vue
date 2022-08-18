@@ -89,7 +89,6 @@ export default {
             return {...option, checked: checked};
           }
       );
-      const checkedOptions = fo.filter( option => option.checked ===true);
       return fo;
     },
   }

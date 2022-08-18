@@ -100,7 +100,6 @@ export default {
     }
   },
   mounted(){
-    // this.changeOptionsTop();
   },
   computed:{
     formattedOptions(){
