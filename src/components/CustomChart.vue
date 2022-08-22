@@ -1,6 +1,10 @@
 <template>
   <div>
     <div class="chart_container">
+      <div class="spinner" v-if="chartDataIsLoading">
+        <ProgressSpinner />
+        <div>Chart data is loading ...</div>
+      </div>
       <div class="chart" :class="toggleClass">
         <canvas id="myChart"></canvas>
       </div>
@@ -108,11 +112,13 @@ Chart.register(
   SubTitle
 );
 import { mapMutations } from "vuex";
-import EventService from "@/services/EventService";
+import ProgressSpinner from "primevue/progressspinner";
 
 export default {
   name: "CustomChart",
-  components: {},
+  components: {
+    ProgressSpinner,
+  },
   props: {
     toggleClass: {
       type: String,
@@ -139,6 +145,7 @@ export default {
       isCompareActive: false,
       currency: "",
       type: this.$store.state.chartdata.indicator,
+      chartDataIsLoading: true,
     };
   },
 
@@ -404,7 +411,7 @@ export default {
           y: {
             ticks: {
               callback: function (value, index, ticks) {
-                return currency + value;
+                return this.currency + value;
               },
               color: "#A3A3A3",
               font: {
@@ -632,6 +639,9 @@ export default {
 .chart {
   height: 422px;
   padding: 40px 50px;
+  &_container {
+    position: relative;
+  }
 }
 
 .tooltipDesign {
@@ -717,6 +727,15 @@ export default {
 
 .disable {
   color: #bacade !important;
+}
+
+.spinner {
+  position: absolute;
+  top: 140px;
+  left: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 @media screen and (max-width: 768px) {
