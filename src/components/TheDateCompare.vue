@@ -39,8 +39,7 @@ export default {
     return {
       datePickerOne: null,
       datePickerTwo: null,
-      dateRangeOne: [],
-      dateRangeTwo: [],
+      dateRange: [],
       startDateOne: null,
       endDateOne: null,
       startDateTwo: null,
@@ -99,7 +98,10 @@ export default {
   computed: {},
   created() {},
   methods: {
-    ...mapMutations("filters", ["closeCompareDatepickerModal"]),
+    ...mapMutations("filters", [
+      "closeCompareDatepickerModal",
+      "updateSelectedCompareRange",
+    ]),
     clearSelection() {
       this.datePickerOne.clearSelection();
       this.datePickerTwo.clearSelection();
@@ -111,16 +113,16 @@ export default {
       this.dateRangeTwo = [];
     },
     getDateRange() {
-      this.dateRangeOne = [];
-      this.dateRangeOne.push(this.startDateOne);
-      this.dateRangeOne.push(this.endDateOne);
+      this.dateRange = [];
+      this.dateRange.push(this.startDateOne);
+      this.dateRange.push(this.endDateOne);
       this.startDateOne = null;
       this.endDateOne = null;
-      this.dateRangeTwo = [];
-      this.dateRangeTwo.push(this.startDateTwo);
-      this.dateRangeTwo.push(this.endDateTwo);
+      this.dateRange.push(this.startDateTwo);
+      this.dateRange.push(this.endDateTwo);
       this.startDateTwo = null;
       this.endDateTwo = null;
+      this.updateSelectedCompareRange(this.dateRange);
       this.closeCompareDatepickerModal();
     },
   },

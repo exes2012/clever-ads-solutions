@@ -3,6 +3,7 @@
     <v-dialog
       v-model="this.$store.state.filters.isFilterModalOpen"
       max-width="500"
+      max-height="713"
       persistent
       transition="dialog-bottom-transition"
       class="dialog"
@@ -377,6 +378,9 @@ export default {
 
 .card {
   padding: 40px 28px;
+  max-height: 713px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 @media screen and (max-width: 768px) {

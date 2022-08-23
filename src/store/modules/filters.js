@@ -16,10 +16,14 @@ export default {
     selectedAdType: [],
     selectedPlatform: [],
     selectedDateRange: [],
+    selectedCompareRange: [],
   },
   mutations: {
     updateSelectedDateRange(state, range) {
       state.selectedDateRange = range;
+    },
+    updateSelectedCompareRange(state, range) {
+      state.selectedCompareRange = range;
     },
     //filter modal window mutations
     updateSelectedCountries(state, list) {
