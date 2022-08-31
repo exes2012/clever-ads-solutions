@@ -1,7 +1,13 @@
 export default {
   namespaced: true,
   state: {
-    footer: [],
+    footer: {
+      dau: "24",
+      arpu: "12323",
+      immersions: "24",
+      ecpm: "1241",
+      est: "1",
+    },
     appList: [
       {
         id: 1,

@@ -10,7 +10,6 @@
         v-model="isColumnApplicationSelected"
         hide-details
         class="option checkelement"
-        @click="preventClose($event)"
       ></v-checkbox>
       <v-checkbox
         label="AdSource"
@@ -105,6 +104,16 @@ export default {
         this.isColumnDAUSelected === true || this.isColumnARPUSelected === true
       );
     },
+  },
+  mounted() {
+    document.addEventListener("click", (event) => {
+      if (!this.$el.contains(event.target)) {
+        this.hideSelect();
+      }
+    });
+  },
+  beforeDestroy() {
+    document.removeEventListener("click", event);
   },
 };
 </script>

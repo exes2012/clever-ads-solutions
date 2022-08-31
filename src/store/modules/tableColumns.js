@@ -81,6 +81,7 @@ export default {
         footer: "12320",
       },
     ],
+
     paymentsTableColumns: [
       {
         field: "period",

@@ -6,6 +6,7 @@ export default {
     chartData: null,
     chartDates: [],
     indicator: "revenue",
+    currency: "123",
   },
 
   getters: {},

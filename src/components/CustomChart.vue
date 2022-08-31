@@ -146,6 +146,7 @@ export default {
       currency: "",
       type: this.$store.state.chartdata.indicator,
       chartDataIsLoading: true,
+      scaleYPrepend: "",
     };
   },
 
@@ -410,9 +411,6 @@ export default {
           },
           y: {
             ticks: {
-              callback: function (value, index, ticks) {
-                return this.currency + value;
-              },
               color: "#A3A3A3",
               font: {
                 weight: 400,
@@ -449,7 +447,7 @@ export default {
 
     this.myChart = myChart;
     this.fetchFromStore();
-    currency = this.$store.state.chartdata.chartData.currency;
+    console.log(currency);
     myChart.update();
   },
   methods: {
@@ -477,6 +475,9 @@ export default {
     generateChartData(myChart) {
       let chartData = this.$store.state.chartdata.chartData;
       let dauArray = [];
+
+      let indicator = this.$store.state.chartdata.indicator;
+      let currency = chartData.currency;
 
       this.currency = chartData.currency;
 
@@ -596,6 +597,14 @@ export default {
       myChart.config.data.labels = this.priorInterval;
       myChart.config.data.datasets = this.dataSets;
 
+      myChart.config.options.scales.y.ticks.callback = function one(value) {
+        if (indicator === "impression") {
+          return value;
+        } else {
+          return currency + value;
+        }
+      };
+
       myChart.update();
       this.legendItems = myChart.legend.legendItems;
 
@@ -652,6 +661,7 @@ export default {
   padding: 16px;
   position: absolute;
   opacity: 1;
+  z-index: 1;
   transform: translate(-50%, 0);
   transition: all 0.1s ease;
 }
