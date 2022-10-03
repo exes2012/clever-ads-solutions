@@ -88,7 +88,7 @@
       </template>
       <template slot="body.append" v-if="totals === true">
         <tr class="table-row">
-          <td>Totals:</td>
+          <td>Total44234s:</td>
           <td class="table-data">150</td>
           <td class="table-data">260</td>
           <td class="table-data">150</td>

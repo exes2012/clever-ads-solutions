@@ -7,12 +7,6 @@
     />
     <the-indicators-bar />
     <the-mediation-chart />
-    <!--    <scroll-table-->
-    <!--      :headers="this.$store.state.tablesHeaders.mediationTableHeaders"-->
-    <!--      :items="this.$store.state.applications.appList"-->
-    <!--      :totals="true"-->
-    <!--    >-->
-    <!--    </scroll-table>-->
     <prime-table
       :columns="this.$store.state.tableColumns.mediationTableColumns"
       :table-data="this.$store.state.applications.appList"
